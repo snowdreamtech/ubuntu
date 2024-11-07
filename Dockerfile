@@ -1,22 +1,22 @@
-FROM debian:12.7-slim
+FROM ubuntu:18.04
 
 # OCI annotations to image
 LABEL org.opencontainers.image.authors="Snowdream Tech" \
-    org.opencontainers.image.title="Debian Base Image" \
-    org.opencontainers.image.description="Docker Images for Debian. (i386,amd64,arm32v5,arm32v7,arm64,mips64le,ppc64le,s390x)" \
-    org.opencontainers.image.documentation="https://hub.docker.com/r/snowdreamtech/debian" \
-    org.opencontainers.image.base.name="snowdreamtech/debian:latest" \
+    org.opencontainers.image.title="Ubuntu Base Image" \
+    org.opencontainers.image.description="Docker Images for Ubuntu. (amd64, arm32v7, arm64,ppc64le,riscv64,s390x)" \
+    org.opencontainers.image.documentation="https://hub.docker.com/r/snowdreamtech/ubuntu" \
+    org.opencontainers.image.base.name="snowdreamtech/ubuntu:latest" \
     org.opencontainers.image.licenses="MIT" \
-    org.opencontainers.image.source="https://github.com/snowdreamtech/debian" \
+    org.opencontainers.image.source="https://github.com/snowdreamtech/ubuntu" \
     org.opencontainers.image.vendor="Snowdream Tech" \
-    org.opencontainers.image.version="12.7" \
-    org.opencontainers.image.url="https://github.com/snowdreamtech/debian"
+    org.opencontainers.image.version="18.04" \
+    org.opencontainers.image.url="https://github.com/snowdreamtech/ubuntu"
 
 ENV DEBIAN_FRONTEND=noninteractive \
     # keep the docker container running
     KEEPALIVE=0 \
     # Ensure the container exec commands handle range of utf8 characters based of
-    # default locales in base image (https://github.com/docker-library/docs/tree/master/debian#locales)
+    # default locales in base image (https://github.com/docker-library/docs/tree/master/ubuntu#locales)
     LANG=C.UTF-8 
 
 RUN set -eux \
@@ -40,8 +40,9 @@ RUN set -eux \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/* \
     && rm -rf /var/tmp/* \
-    && sed -i "s|Suites:\s*bookworm\s*bookworm-updates.*|Suites: bookworm bookworm-updates bookworm-backports trixie sid experimental|g" /etc/apt/sources.list.d/debian.sources \
     && echo 'export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"' >> /etc/bash.bashrc 
+
+COPY vimrc.local /etc/vim/vimrc.local
 
 COPY docker-entrypoint.sh /usr/local/bin/
 

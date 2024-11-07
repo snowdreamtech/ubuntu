@@ -1,8 +1,8 @@
-# debian
+# ubuntu
 
-[![debian](http://dockeri.co/image/snowdreamtech/debian)](https://hub.docker.com/r/snowdreamtech/debian)
+[![ubuntu](http://dockeri.co/image/snowdreamtech/ubuntu)](https://hub.docker.com/r/snowdreamtech/ubuntu)
 
-Docker Image packaging for debian. (amd64, arm32v5, arm32v7, arm64v8, i386,mips64le, ppc64le, s390x)
+Docker Image packaging for ubuntu. (amd64, arm32v7, arm64v8, ppc64le,riscv64, s390x)
 
 # Usage
 
@@ -14,21 +14,21 @@ To help you get started creating a container from this image you can either use 
 
 ```bash
 docker run -d \
-  --name=debian \
+  --name=ubuntu \
   -e TZ=Asia/Shanghai \
   --restart unless-stopped \
-  snowdreamtech/debian:latest
+  snowdreamtech/ubuntu:latest
 ```
 
 ### Advance
 
 ```bash
 docker run -d \
-  --name=debian \
+  --name=ubuntu \
   -e TZ=Asia/Shanghai \
   -v /path/to/data:/path/to/data \
   --restart unless-stopped \
-  snowdreamtech/debian:latest
+  snowdreamtech/ubuntu:latest
 ```
 
 ## Docker Compose
@@ -39,9 +39,9 @@ docker run -d \
 version: "3"
 
 services:
-  debian:
-    image: snowdreamtech/debian:latest
-    container_name: debian
+  ubuntu:
+    image: snowdreamtech/ubuntu:latest
+    container_name: ubuntu
     environment:
       - TZ=Asia/Shanghai
     restart: unless-stopped
@@ -53,9 +53,9 @@ services:
 version: "3"
 
 services:
-  debian:
-    image: snowdreamtech/debian:latest
-    container_name: debian
+  ubuntu:
+    image: snowdreamtech/ubuntu:latest
+    container_name: ubuntu
     environment:
       - TZ=Asia/Shanghai
     volumes:
@@ -67,7 +67,7 @@ services:
 
 ```bash
 docker buildx create --use --name build --node build --driver-opt network=host
-docker buildx build -t snowdreamtech/debian --platform=linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64,linux/mips64le,linux/ppc64le,linux/s390x . --push
+docker buildx build -t snowdreamtech/ubuntu --platform=linux/amd64,linux/arm/v7,linux/arm64,linux/ppc64le,linux/riscv64,linux/s390x . --push
 ```
 
 ## Reference
@@ -79,7 +79,7 @@ docker buildx build -t snowdreamtech/debian --platform=linux/386,linux/amd64,lin
 1. [Faster Multi-Platform Builds: Dockerfile Cross-Compilation Guide](https://www.docker.com/blog/faster-multi-platform-builds-dockerfile-cross-compilation-guide/)
 1. [docker/buildx](https://github.com/docker/buildx)
 
-## Contact (备注：debian)
+## Contact (备注：ubuntu)
 
 * Email: sn0wdr1am@qq.com
 * QQ: 3217680847
