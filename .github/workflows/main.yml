@@ -103,8 +103,8 @@ jobs:
             type=edge,enable=true,priority=700,prefix=,suffix=,branch=dev
             type=raw,enable=${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name != 'schedule' }},priority=200,prefix=,suffix=,value=latest
             type=raw,enable=${{ startsWith(github.ref, 'refs/tags/') }},priority=200,prefix=,suffix=,value=latest
-            type=raw,enable=${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name != 'schedule' }},priority=200,prefix=,suffix=,value=bionic
-            type=raw,enable=${{ startsWith(github.ref, 'refs/tags/') }},priority=200,prefix=,suffix=,value=bionic
+            type=raw,enable=${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && github.event_name != 'schedule' }},priority=200,prefix=,suffix=,value=focal 
+            type=raw,enable=${{ startsWith(github.ref, 'refs/tags/') }},priority=200,prefix=,suffix=,value=focal 
             type=schedule,enable=true,priority=1000,prefix=,suffix=,pattern=nightly
             type=match,enable=true,priority=800,prefix=,suffix=,pattern=\d+.\d+.\d+,group=0,value=
             type=match,enable=true,priority=800,prefix=,suffix=,pattern=\d+.\d+,group=0,value=
@@ -122,7 +122,7 @@ jobs:
             BUILDTIME=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
             VERSION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
             REVISION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.revision'] }}
-          platforms: linux/386,linux/amd64,linux/arm/v7,linux/arm64,linux/ppc64le,linux/s390x
+          platforms: linux/amd64,linux/arm/v7,linux/arm64,linux/ppc64le,linux/riscv64,linux/s390x
           push: ${{ github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/heads/feat/') && !startsWith(github.ref, 'refs/heads/feature/') && !startsWith(github.ref, 'refs/heads/fix/') && !startsWith(github.ref, 'refs/heads/pr/') }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

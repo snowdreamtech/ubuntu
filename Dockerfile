@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 # OCI annotations to image
 LABEL org.opencontainers.image.authors="Snowdream Tech" \
@@ -9,7 +9,7 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.licenses="MIT" \
     org.opencontainers.image.source="https://github.com/snowdreamtech/ubuntu" \
     org.opencontainers.image.vendor="Snowdream Tech" \
-    org.opencontainers.image.version="18.04" \
+    org.opencontainers.image.version="20.04" \
     org.opencontainers.image.url="https://github.com/snowdreamtech/ubuntu"
 
 ENV DEBIAN_FRONTEND=noninteractive \
