@@ -1,6 +1,6 @@
 # ubuntu
 
-[![ubuntu](http://dockeri.co/image/snowdreamtech/ubuntu)](https://hub.docker.com/r/snowdreamtech/ubuntu)
+[![dockeri.co](https://dockerico.blankenship.io/image/snowdreamtech/ubuntu)](https://hub.docker.com/r/snowdreamtech/ubuntu)
 
 Docker Image packaging for ubuntu. (amd64, arm32v7, arm64v8, ppc64le,riscv64, s390x)
 
