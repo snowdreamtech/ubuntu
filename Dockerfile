@@ -1,4 +1,4 @@
-FROM ubuntu:24.10
+FROM ubuntu:25.04
 
 # OCI annotations to image
 LABEL org.opencontainers.image.authors="Snowdream Tech" \
@@ -9,7 +9,7 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.licenses="MIT" \
     org.opencontainers.image.source="https://github.com/snowdreamtech/ubuntu" \
     org.opencontainers.image.vendor="Snowdream Tech" \
-    org.opencontainers.image.version="24.10" \
+    org.opencontainers.image.version="25.04" \
     org.opencontainers.image.url="https://github.com/snowdreamtech/ubuntu"
     
 # Switch to the user
