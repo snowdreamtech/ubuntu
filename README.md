@@ -1,6 +1,9 @@
 # ubuntu
 
-[![dockeri.co](https://dockerico.blankenship.io/image/snowdreamtech/ubuntu)](https://hub.docker.com/r/snowdreamtech/ubuntu)
+![Docker Image Version](https://img.shields.io/docker/v/snowdreamtech/ubuntu)
+![Docker Image Size](https://img.shields.io/docker/image-size/snowdreamtech/ubuntu/latest)
+![Docker Pulls](https://img.shields.io/docker/pulls/snowdreamtech/ubuntu)
+![Docker Stars](https://img.shields.io/docker/stars/snowdreamtech/ubuntu)
 
 Docker Image packaging for ubuntu. (amd64, arm32v7, arm64v8, ppc64le,riscv64, s390x)
 
