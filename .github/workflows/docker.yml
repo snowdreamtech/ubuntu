@@ -41,18 +41,27 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # Ubuntu 22.04 (Jammy) - 5 platforms
+          # Note: riscv64 support was added in Ubuntu 24.04
           - version: "22"
             codename: "jammy"
             is_latest: false
+            platforms: "linux/amd64,linux/arm64,linux/armhf,linux/ppc64le,linux/s390x"
+          # Ubuntu 24.04 (Noble) - 6 platforms (adds riscv64)
           - version: "24"
             codename: "noble"
             is_latest: true
+            platforms: "linux/amd64,linux/arm64,linux/armhf,linux/ppc64le,linux/s390x,linux/riscv64"
+          # Ubuntu 25.10 (Questing) - 6 platforms
           - version: "25"
             codename: "questing"
             is_latest: false
+            platforms: "linux/amd64,linux/arm64,linux/armhf,linux/ppc64le,linux/s390x,linux/riscv64"
+          # Ubuntu 26.04 (Resolute) - 6 platforms
           - version: "26"
             codename: "resolute"
             is_latest: false
+            platforms: "linux/amd64,linux/arm64,linux/armhf,linux/ppc64le,linux/s390x,linux/riscv64"
 
     steps:
       - name: Harden Runner
@@ -96,7 +105,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: docker/${{ matrix.version }}
-          platforms: linux/amd64,linux/arm64
+          platforms: ${{ matrix.platforms }}
           push: true
           tags: |
             snowdreamtech/ubuntu:${{ matrix.version }}-latest
