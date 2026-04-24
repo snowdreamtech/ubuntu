@@ -1,226 +1,299 @@
-# Snowdream Tech AI IDE Template
+# Docker Images for Ubuntu
 
-[![CI Pipeline](https://img.shields.io/github/actions/workflow/status/snowdreamtech/template/ci.yml?branch=main&label=CI%20Pipeline)](https://github.com/snowdreamtech/template/actions/workflows/ci.yml)
-[![CD Pipeline](https://img.shields.io/github/actions/workflow/status/snowdreamtech/template/cd.yml?branch=main&label=CD%20Pipeline)](https://github.com/snowdreamtech/template/actions/workflows/cd.yml)
-[![GitHub Pages](https://img.shields.io/github/actions/workflow/status/snowdreamtech/template/pages.yml?branch=main&label=Docs&logo=github)](https://github.com/snowdreamtech/template/actions/workflows/pages.yml)
-[![CodeQL](https://img.shields.io/github/actions/workflow/status/snowdreamtech/template/codeql.yml?branch=main&label=CodeQL&logo=github)](https://github.com/snowdreamtech/template/actions/workflows/codeql.yml)
-[![Multi-OS Verified](https://img.shields.io/badge/Verified-Linux%20%7C%20macOS%20%7C%20Windows-blue)](https://github.com/snowdreamtech/template/actions/workflows/ci.yml)
-[![Security Audit](https://img.shields.io/badge/Security-Zizmor%20%7C%20Trivy%20%7C%20Gitleaks-brightgreen)](https://github.com/snowdreamtech/template/actions/workflows/ci.yml)
-[![SBOM Available](https://img.shields.io/badge/SBOM-Available-success)](https://github.com/snowdreamtech/template/releases/latest)
+[![Docker](https://img.shields.io/github/actions/workflow/status/snowdreamtech/ubuntu/docker.yml?branch=main&label=Docker&logo=github)](https://github.com/snowdreamtech/ubuntu/actions/workflows/docker.yml)
+[![Docker Image Size](https://img.shields.io/docker/image-size/snowdreamtech/ubuntu/latest?logo=docker)](https://hub.docker.com/r/snowdreamtech/ubuntu)
+[![Docker Pulls](https://img.shields.io/docker/pulls/snowdreamtech/ubuntu?logo=docker)](https://hub.docker.com/r/snowdreamtech/ubuntu)
+[![Docker Stars](https://img.shields.io/docker/stars/snowdreamtech/ubuntu?logo=docker)](https://hub.docker.com/r/snowdreamtech/ubuntu)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/license/MIT)
-[![Release](https://img.shields.io/github/v/release/snowdreamtech/template?logo=github&sort=semver)](https://github.com/snowdreamtech/template/releases/latest)
-[![Dependabot Enabled](https://img.shields.io/badge/Dependabot-Enabled-brightgreen?logo=dependabot)](https://github.com/snowdreamtech/template/blob/main/.github/dependabot.yml)
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
-[![GitHub Stars](https://img.shields.io/github/stars/snowdreamtech/template?style=social)](https://github.com/snowdreamtech/template)
-[![GitHub Issues](https://img.shields.io/github/issues/snowdreamtech/template)](https://github.com/snowdreamtech/template/issues)
-[![Code Size](https://img.shields.io/github/languages/code-size/snowdreamtech/template)](https://github.com/snowdreamtech/template)
 
 [English](README.md) | [简体中文](README_zh-CN.md)
 
-An enterprise-grade, foundational template designed for multi-AI IDE collaboration. This repository serves as a **Single Source of Truth** for AI agent rules, workflows, and project configurations, supporting over 50 different AI-assisted IDEs with massive multi-language support.
+Production-ready Ubuntu Docker images with multi-platform support, comprehensive tooling, and security features.
 
 ## 🌟 Features
 
-- **Multi-IDE Compatibility**: Out-of-the-box support for Cursor, Windsurf, GitHub Copilot, Cline, Roo Code, Trae, Gemini, Claude Code, and 50+ other AI editors.
-- **Unified Rule System**: Centralized rule definitions in `.agent/rules/`. Changes propagate automatically to all supported IDEs via a secure symlink/redirect pattern.
-- **80+ Language & Framework Rules**: Pre-configured high-quality rules from Rust, Go, TypeScript, Python to Ansible, Kubernetes, and API design.
-- **Smart Workflows (SpecKit)**: Standardized `.agent/workflows/` commands (`speckit.plan`, `speckit.analyze`, `snowdreamtech.init`) that behave consistently across all supported environments.
-- **Triple Guarantee Quality**: 100% code purity enforced through Pre-commit and GitHub Actions integrated quality gates.
-- **Cross-Platform Ready**: Runs seamlessly on macOS (Homebrew/MacPorts), Linux, and Windows.
+- **Multi-Version Support**: Ubuntu 22.04 (Jammy), 24.04 (Noble), 25.10 (Questing), 26.04 (Resolute)
+- **Multi-Platform**: Supports amd64, arm64, armhf, ppc64le, s390x, and riscv64 (24.04+)
+- **Multi-Registry**: Available on DockerHub, GitHub Container Registry (GHCR), and Quay.io
+- **Essential Tooling**: Pre-installed curl, git, vim, jq, gosu, and network utilities
+- **Flexible User Management**: Support for custom PUID/PGID and non-root execution
+- **Modular Entrypoint**: Extensible initialization system via entrypoint.d/ scripts
+- **Security First**: Vulnerability scanning, SBOM generation, provenance attestation, and image signing
+- **Debug Support**: Conditional debug logging via DEBUG environment variable
 
-## 🏗️ Section 1 — Design & Architecture
+## 📦 Supported Versions
 
-### Overview
+| Version | Codename | Ubuntu Release | Architectures | Status |
+|---------|----------|----------------|---------------|--------|
+| 22      | jammy    | 22.04 LTS      | 5 platforms   | ✅ Supported |
+| 24      | noble    | 24.04 LTS      | 6 platforms   | ✅ Latest |
+| 25      | questing | 25.10          | 6 platforms   | ✅ Supported |
+| 26      | resolute | 26.04 LTS      | 6 platforms   | ✅ Supported |
 
-The Snowdream Tech Template is a foundational scaffold engineered to solve the "N-IDE Fragmentation" problem. It standardizes the development environment, AI agent rules, and automation pipelines across varied platforms and languages.
+### Architecture Support
 
-**Key Capabilities:**
+- **Ubuntu 22.04 (Jammy)**: linux/amd64, linux/arm64, linux/armhf, linux/ppc64le, linux/s390x
+- **Ubuntu 24.04+ (Noble/Questing/Resolute)**: linux/amd64, linux/arm64, linux/armhf, linux/ppc64le, linux/s390x, linux/riscv64
 
-- Provides a **Unified Rule Engine** that governs AI behavior consistently across 50+ IDEs.
-- Enforces **Cross-Platform Portability** through dynamically adapting POSIX shell automation.
-- Implements a **Triple Guarantee Quality Gate** (IDE, CLI, CI) to prevent regressions.
-- Supports **Massive Multi-Language Stacks** with modular onboarding logic.
+> **Note**: RISC-V (riscv64) support was added starting with Ubuntu 24.04.
 
-### Architecture
+## 🚀 Quick Start
 
-```mermaid
-graph TD
-    A["Developers & Agents"] -->|Operates via| IDE["Cursor / Windsurf / Copilot / 50+ Others"]
-    IDE -->|Reads Rules via Redirects| R1[".vscode/"]
-    IDE -->|Reads Rules via Redirects| R2[".github/"]
-    IDE -->|Reads Rules via Redirects| R3[".cline/ .trae/ etc."]
+### Pull from DockerHub
 
-    R1 -.->|SSoT Pointer| CoreRules[".agent/rules/"]
-    R2 -.->|SSoT Pointer| CoreRules
-    R3 -.->|SSoT Pointer| CoreRules
+```bash
+# Latest version (24.04 Noble)
+docker pull snowdreamtech/ubuntu:latest
 
-    CoreRules -->|Governs| Src["Source Code"]
-    CoreRules -->|Governs| Scripts["CI/CD & Shell Scripts"]
+# Specific version by number
+docker pull snowdreamtech/ubuntu:22-latest
+docker pull snowdreamtech/ubuntu:24-latest
+
+# Specific version by codename
+docker pull snowdreamtech/ubuntu:jammy
+docker pull snowdreamtech/ubuntu:noble
+docker pull snowdreamtech/ubuntu:questing
+docker pull snowdreamtech/ubuntu:resolute
 ```
 
-### Design Principles
+### Pull from GitHub Container Registry
 
-- **Single Source of Truth (SSoT)**: All AI rules, commands, and Git hooks live in one place. No duplicated IDE configurations.
-- **Cross-Platform Portability**: Heavy automation logic is written in POSIX Shell, with thin wrappers for Windows PowerShell/Batch.
-- **Triple Guarantee Quality**: Linting and formatting form an impenetrable wall, enforced at the IDE layer, pre-commit layer, and CI/CD GitHub Actions layer.
+```bash
+docker pull ghcr.io/snowdreamtech/ubuntu:latest
+docker pull ghcr.io/snowdreamtech/ubuntu:24-latest
+docker pull ghcr.io/snowdreamtech/ubuntu:noble
+```
 
-### Responsibilities
+### Pull from Quay.io
 
-- **.agent/rules/**: Owns the definitive behavioral logic for AI agents across all supported languages.
-- **scripts/**: Owns the cross-platform automation and lifecycle logic.
-- **.agent/workflows/**: Owns the interactive AI commands (SpecKit).
+```bash
+docker pull quay.io/snowdreamtech/ubuntu:latest
+docker pull quay.io/snowdreamtech/ubuntu:24-latest
+docker pull quay.io/snowdreamtech/ubuntu:noble
+```
 
----
+### Run a Container
 
-## 📖 Section 2 — Usage Guide
+```bash
+# Basic usage
+docker run --rm -it snowdreamtech/ubuntu:latest bash
+
+# With custom user (non-root)
+docker run --rm -it \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e USER=myuser \
+  snowdreamtech/ubuntu:latest bash
+
+# With debug logging
+docker run --rm -it \
+  -e DEBUG=true \
+  snowdreamtech/ubuntu:latest bash
+
+# With custom timezone
+docker run --rm -it \
+  -e TZ=Asia/Shanghai \
+  snowdreamtech/ubuntu:latest bash
+
+# With custom working directory
+docker run --rm -it \
+  -e WORKDIR=/app \
+  -v $(pwd):/app \
+  snowdreamtech/ubuntu:latest bash
+```
+
+## 🏷️ Image Tags
+
+### Tag Naming Convention
+
+| Tag Pattern | Description | Example |
+|-------------|-------------|---------|
+| `latest` | Latest stable version (24.04) | `snowdreamtech/ubuntu:latest` |
+| `{version}-latest` | Latest build for specific version | `22-latest`, `24-latest` |
+| `{codename}` | Ubuntu codename | `jammy`, `noble`, `questing`, `resolute` |
+| `{codename}-latest` | Latest build for codename | `jammy-latest`, `noble-latest` |
+| `{version}-{branch}` | Branch builds | `22-dev`, `24-main` |
+| `{version}-nightly` | Nightly builds | `22-nightly`, `24-nightly` |
+| `{version}-YYYYMMDD` | Date-tagged builds | `22-20250115`, `24-20250115` |
+| `{version}.{minor}.{patch}` | Semantic version | `22.04.0`, `24.04.0` |
+
+### Version Mapping
+
+| Short Version | Full Version | Codename |
+|---------------|--------------|----------|
+| 22            | 22.04        | jammy    |
+| 24            | 24.04        | noble    |
+| 25            | 25.10        | questing |
+| 26            | 26.04        | resolute |
+
+## 🔧 Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DEBUG` | `false` | Enable debug logging for entrypoint scripts |
+| `PUID` | `0` | User ID for non-root execution |
+| `PGID` | `0` | Group ID for non-root execution |
+| `USER` | `root` | Username for non-root execution |
+| `WORKDIR` | `/root` | Working directory inside container |
+| `TZ` | System default | Timezone (e.g., `Asia/Shanghai`, `America/New_York`) |
+| `LANG` | `C.UTF-8` | Locale setting |
+| `DEBIAN_FRONTEND` | `noninteractive` | Suppress interactive prompts during package installation |
+
+## 📁 Project Structure
+
+```text
+ubuntu/
+├── docker/
+│   ├── 22/                         # Ubuntu 22.04 (Jammy)
+│   │   ├── Dockerfile
+│   │   ├── docker-entrypoint.sh
+│   │   └── entrypoint.d/
+│   │       ├── 00-base-init.sh
+│   │       ├── 01-base-setup.sh
+│   │       └── 99-base-end.sh
+│   ├── 24/                         # Ubuntu 24.04 (Noble)
+│   │   ├── Dockerfile
+│   │   ├── docker-entrypoint.sh
+│   │   └── entrypoint.d/
+│   ├── 25/                         # Ubuntu 25.10 (Questing)
+│   │   ├── Dockerfile
+│   │   ├── docker-entrypoint.sh
+│   │   └── entrypoint.d/
+│   └── 26/                         # Ubuntu 26.04 (Resolute)
+│       ├── Dockerfile
+│       ├── docker-entrypoint.sh
+│       └── entrypoint.d/
+└── .github/
+    └── workflows/
+        └── docker.yml              # Multi-platform build workflow
+```
+
+## 🛠️ Building Locally
 
 ### Prerequisites
 
-- **Runtime**: Node.js (>= 20.x), Python (>= 3.10.x).
-- **Git**: Global git installation required.
+- Docker with Buildx support
+- QEMU for multi-platform builds (optional)
 
-### Quick Start
-
-1. **Prerequisites**: [mise](https://mise.jdx.dev/) is highly recommended for global tool management (automatically installed during setup).
-2. **Initialize**: `make setup` (bootstraps mise and core tools).
-3. **Install**: `make install` (installs project dependencies).
-4. **Verify**: `make verify` (ensures everything is green).
-
-### Configuration Reference
-
-| Parameter      | Purpose                                                           | Location                |
-| :------------- | :---------------------------------------------------------------- | :---------------------- |
-| `PROJECT_NAME` | Project identity                                                  | `init-project.sh`       |
-| `GITHUB_PROXY` | Network optimization (See [Proxy Usage](#-proxy-usage-scenarios)) | `scripts/lib/common.sh` |
-| `VERSION`      | Semantic versioning                                               | `package.json`          |
-
-### File Structure
-
-```text
-project-root/
-├── .agent/              # 🤖 Canonical AI configuration (The Brain)
-│   ├── rules/           # 📏 Unified AI behavioral rules (80+ sets, SSoT)
-│   └── workflows/       # 🛠️ Unified commands & AI workflows (SpecKit)
-├── .agents/             # 🧩 Shared command sources (Auto-managed symlinks)
-├── .github/             # 🐙 GitHub integration & Copilot settings
-├── .vscode/             # 💻 Optimized VS Code configurations
-└── src/                 # 📦 Your actual application source code
-```
-
----
-
-## 🛠️ Section 3 — Operations Guide
-
-### Pre-deployment Checklist
-
-1. Run `make verify` to ensure all quality gates are green.
-2. Run `make audit` to verify security compliance.
-3. Ensure `CHANGELOG.md` is updated.
-
-### Performance Considerations
-
-- **Linting Speed**: Pre-commit hooks target < 5s by scanning staged files only.
-- **CI Throughput**: GitHub Actions use matrix builds for parallel testing across OS types.
-
-### Troubleshooting
-
-- **Problem**: `make install` fails on Windows.
-  - **Diagnosis**: Check if `ExecutionPolicy` allows script execution.
-  - **Solution**: Run `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`.
-- **Problem**: Gitleaks detects false positives.
-  - **Diagnosis**: Check `.gitleaks.toml` allowlist.
-  - **Solution**: Add fingerprint to `.gitleaksignore`.
-- **Problem**: Pre-commit hooks fail on macOS after `make install` with Python errors.
-  - **Diagnosis**: Check if the venv exists: `ls .venv/bin/python`.
-  - **Solution**: Rebuild the venv: `rm -rf .venv && make install`.
-
----
-
-## 🔒 Section 4 — Security Considerations
-
-### Security Model
-
-- **Secret Management**: All secrets must be injected via environment variables or handled by HashiCorp Vault. Never commit `.env` files.
-- **Audit Logging**: All critical operations (commits, releases, state changes) are traced via Git and CI logs.
-- **Supply Chain**: All CI actions are pinned to exact versions/SHAs.
-
-### Best Practices
-
-| Aspect      | Requirement                  | Implementation                    |
-| :---------- | :--------------------------- | :-------------------------------- |
-| Secrets     | No plaintext secrets in repo | `gitleaks` enforced at commit     |
-| Integrity   | Verify downloads             | SHA-256 validation in `common.sh` |
-| Permissions | Non-root execution           | Dockerfile best practices         |
-
----
-
-## 🧑‍💻 Section 5 — Development Guide
-
-### Code Organization
-
-```text
-project-root/
-├── .agent/               # AI configuration (Single Source of Truth)
-│   ├── rules/            # 88 behavioral rule files for AI agents
-│   └── workflows/        # SpecKit slash-command definitions
-├── .github/              # GitHub ecosystem (Actions, templates, Dependabot)
-│   └── workflows/        # CI/CD pipelines (lint, verify, release, security)
-├── .devcontainer/        # DevContainer configuration for reproducible environments
-├── docs/                 # Project documentation
-│   ├── adr/              # Architecture Decision Records
-│   ├── runbooks/         # Operations and recovery runbooks
-│   └── glossary.md       # Bilingual term glossary
-├── scripts/              # POSIX shell automation (setup, install, verify)
-│   └── lib/              # Shared shell library functions
-└── Makefile              # Task orchestration (setup, install, lint, verify, audit)
-```
-
-**Naming Conventions**: Rule files use `NN-kebab-case.md` (core rules) or `technology.md`
-(language stacks). Workflow files use `namespace.verb.md`. Shell scripts use `kebab-case.sh`.
-
-### Extension Points
-
-1. **Adding Rules**: Create a new `.md` file in `.agent/rules/` and link it in `00-index.md`.
-2. **Adding Commands**: Add `.md` files to `.agent/workflows/`.
-3. **Adding IDE Support**: Create a redirect folder (e.g., `.myide/`) following the symlink pattern in Rule 03.
-
-### Local Development Setup
+### Build a Specific Version
 
 ```bash
-git clone <repo>
-cd <repo>
-git config core.ignorecase false  # MANDATORY for Mac/Windows
-make setup
-make install
+# Build Ubuntu 22.04
+docker build -t ubuntu-local:22 docker/22/
+
+# Build Ubuntu 24.04
+docker build -t ubuntu-local:24 docker/24/
+
+# Build Ubuntu 25.10
+docker build -t ubuntu-local:25 docker/25/
+
+# Build Ubuntu 26.04
+docker build -t ubuntu-local:26 docker/26/
 ```
 
-### References
+### Build Multi-Platform Images
 
-- [Full Documentation](docs/index.md)
-- [Project Glossary](docs/glossary.md)
-- [Conventional Commits](https://www.conventionalcommits.org/)
+```bash
+# Set up buildx builder
+docker buildx create --name multiplatform --use
 
-### 🚀 Proxy Usage Scenarios
+# Build for multiple platforms (Ubuntu 24.04)
+docker buildx build \
+  --platform linux/amd64,linux/arm64,linux/armhf,linux/ppc64le,linux/s390x,linux/riscv64 \
+  -t ubuntu-local:24 \
+  docker/24/
 
-The `GITHUB_PROXY` (default: `https://gh-proxy.sn0wdr1am.com/`) is optimized for specific network acceleration scenarios. Misusing it for unsupported protocols (like Git) will result in errors.
+# Build for multiple platforms (Ubuntu 22.04 - no riscv64)
+docker buildx build \
+  --platform linux/amd64,linux/arm64,linux/armhf,linux/ppc64le,linux/s390x \
+  -t ubuntu-local:22 \
+  docker/22/
+```
 
-| Scenario              | Supported? | Example / Note                                         |
-| :-------------------- | :--------- | :----------------------------------------------------- |
-| **Release Files**     | ✅ Yes     | `.../releases/download/v1.0/tool.zip`                  |
-| **Source Archives**   | ✅ Yes     | `.../archive/master.zip` or `.tar.gz`                  |
-| **Direct File Links** | ✅ Yes     | `.../blob/master/filename`                             |
-| **Git Clone**         | ❌ **No**  | Do **not** use for `git clone` or `insteadOf` configs. |
-| **Project Folders**   | ❌ **No**  | Browsing/cloning via proxy is not supported.           |
+## 🔐 Security Features
 
-> [!IMPORTANT]
-> To prevent breaking toolchains (like `mise` or `asdf`), this template explicitly disables Git redirection via this proxy. Use it only for direct HTTP downloads in scripts.
+- **Vulnerability Scanning**: All images are scanned with Trivy for CRITICAL and HIGH severity vulnerabilities
+- **SBOM Generation**: Software Bill of Materials (SBOM) in CycloneDX format attached to all images
+- **Provenance Attestation**: SLSA provenance metadata for supply chain security
+- **Image Signing**: All images are signed with Cosign using keyless OIDC
+- **Egress Audit**: GitHub Actions workflow uses Harden Runner for network egress monitoring
+
+## 📝 Usage Examples
+
+### As a Base Image
+
+```dockerfile
+FROM snowdreamtech/ubuntu:24-latest
+
+# Install additional packages
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy application
+COPY . /app
+WORKDIR /app
+
+# Run application
+CMD ["python3", "app.py"]
+```
+
+### With Docker Compose
+
+```yaml
+version: '3.8'
+
+services:
+  app:
+    image: snowdreamtech/ubuntu:24-latest
+    environment:
+      - DEBUG=false
+      - TZ=Asia/Shanghai
+      - PUID=1000
+      - PGID=1000
+      - USER=appuser
+      - WORKDIR=/app
+    volumes:
+      - ./app:/app
+    command: bash -c "cd /app && ./run.sh"
+```
+
+### Extending Entrypoint Scripts
+
+Add custom initialization scripts to the `entrypoint.d/` directory:
+
+```dockerfile
+FROM snowdreamtech/ubuntu:24-latest
+
+# Add custom initialization script
+COPY my-custom-init.sh /usr/local/bin/entrypoint.d/50-custom-init.sh
+RUN chmod +x /usr/local/bin/entrypoint.d/50-custom-init.sh
+```
+
+Scripts in `entrypoint.d/` are executed in lexicographic order:
+- `00-base-init.sh` - Early initialization
+- `01-base-setup.sh` - Configuration setup
+- `50-custom-init.sh` - Your custom script
+- `99-base-end.sh` - Final setup steps
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
-This project is licensed under the **MIT License**.
+This project is licensed under the MIT License.
 Copyright (c) 2026-present [SnowdreamTech Inc.](https://github.com/snowdreamtech)
 See the [LICENSE](./LICENSE) file for the full license text.
 
-## Star History
+## 🔗 Links
 
-[![Star History Chart](https://api.star-history.com/image?repos=snowdreamtech/template&type=date&legend=top-left)](https://www.star-history.com/?repos=snowdreamtech%2Ftemplate&type=date&legend=top-left)
+- [Docker Hub](https://hub.docker.com/r/snowdreamtech/ubuntu)
+- [GitHub Container Registry](https://github.com/snowdreamtech/ubuntu/pkgs/container/ubuntu)
+- [Quay.io](https://quay.io/repository/snowdreamtech/ubuntu)
+- [Source Code](https://github.com/snowdreamtech/ubuntu)
+- [Issue Tracker](https://github.com/snowdreamtech/ubuntu/issues)
+
+## ⭐ Star History
+
+[![Star History Chart](https://api.star-history.com/image?repos=snowdreamtech/ubuntu&type=date&legend=top-left)](https://www.star-history.com/?repos=snowdreamtech%2Fubuntu&type=date&legend=top-left)
