@@ -36,6 +36,7 @@
 *.tsx text eol=lf
 *.vue text eol=lf
 *.zsh text eol=lf
+docker-entrypoint.sh text eol=lf
 
 # -----------------------------------------------------------------------------
 # 3. Documentation & Configuration (All LF)
