@@ -101,16 +101,59 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
 
+      - name: Generate Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            name=snowdreamtech/ubuntu,enable=true
+            name=ghcr.io/snowdreamtech/ubuntu,enable=true
+            name=quay.io/snowdreamtech/ubuntu,enable=true
+          flavor: |
+            latest=false
+            prefix=
+            suffix=
+          tags: |
+            # Branch builds (non-tag pushes) - version-prefixed branch name
+            type=ref,enable=${{ github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/') }},priority=600,prefix=${{ matrix.version }}-,suffix=,event=branch
+            # Main/dev branch - version-latest tag
+            type=raw,enable=${{ contains(fromJSON('["refs/heads/main", "refs/heads/dev"]'), github.ref) && github.event_name != 'schedule' }},priority=200,prefix=${{ matrix.version }}-,suffix=,value=latest
+            # Main/dev branch - global latest tag (only for is_latest version)
+            type=raw,enable=${{ matrix.is_latest && contains(fromJSON('["refs/heads/main", "refs/heads/dev"]'), github.ref) && github.event_name != 'schedule' }},priority=200,prefix=,suffix=,value=latest
+            # Tag builds - version-latest tag
+            type=raw,enable=${{ startsWith(github.ref, 'refs/tags/') }},priority=200,prefix=${{ matrix.version }}-,suffix=,value=latest
+            # Tag builds - global latest tag (only for is_latest version)
+            type=raw,enable=${{ matrix.is_latest && startsWith(github.ref, 'refs/tags/') }},priority=200,prefix=,suffix=,value=latest
+            # Nightly builds
+            type=schedule,enable=true,priority=1000,prefix=${{ matrix.version }}-,suffix=,pattern=nightly
+            # Date-based tags for traceability (YYYYMMDD)
+            type=schedule,enable=true,priority=900,prefix=${{ matrix.version }}-,suffix=,pattern={{date 'YYYYMMDD'}}
+            # Semantic version tags (x.y.z)
+            type=match,enable=${{ startsWith(github.ref, format('refs/tags/{0}-', matrix.version)) }},priority=800,prefix=,suffix=,pattern=v?(\d+\.\d+\.\d+),group=1
+            # Semantic version tags (x.y)
+            type=match,enable=${{ startsWith(github.ref, format('refs/tags/{0}-', matrix.version)) }},priority=800,prefix=,suffix=,pattern=v?(\d+\.\d+),group=1
+            # Semantic version tags (x) - only for is_latest and non-0.x versions
+            type=match,enable=${{ matrix.is_latest && startsWith(github.ref, format('refs/tags/{0}-', matrix.version)) && !contains(github.ref, '-0.') && !contains(github.ref, '/0.') }},priority=800,prefix=,suffix=,pattern=v?(\d+),group=1
+            # Ubuntu codename tags - main/dev branch
+            type=raw,enable=${{ contains(fromJSON('["refs/heads/main", "refs/heads/dev"]'), github.ref) && github.event_name != 'schedule' }},priority=300,prefix=,suffix=,value=${{ matrix.codename }}
+            # Ubuntu codename tags - tag builds
+            type=raw,enable=${{ startsWith(github.ref, format('refs/tags/{0}-', matrix.version)) }},priority=300,prefix=,suffix=,value=${{ matrix.codename }}
+            # Ubuntu codename-latest tags - main/dev branch
+            type=raw,enable=${{ contains(fromJSON('["refs/heads/main", "refs/heads/dev"]'), github.ref) && github.event_name != 'schedule' }},priority=250,prefix=,suffix=-latest,value=${{ matrix.codename }}
+            # Ubuntu codename-latest tags - tag builds
+            type=raw,enable=${{ startsWith(github.ref, format('refs/tags/{0}-', matrix.version)) }},priority=250,prefix=,suffix=-latest,value=${{ matrix.codename }}
+        env:
+          DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: docker/${{ matrix.version }}
           platforms: ${{ matrix.platforms }}
           push: true
-          tags: |
-            snowdreamtech/ubuntu:${{ matrix.version }}-latest
-            snowdreamtech/ubuntu:${{ matrix.codename }}
-            snowdreamtech/ubuntu:${{ matrix.codename }}-latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          annotations: ${{ steps.meta.outputs.annotations }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
