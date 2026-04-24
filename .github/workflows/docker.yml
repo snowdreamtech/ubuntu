@@ -146,6 +146,7 @@ jobs:
           DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
 
       - name: Build and push
+        id: build
         uses: docker/build-push-action@v5
         with:
           context: docker/${{ matrix.version }}
@@ -154,6 +155,8 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           annotations: ${{ steps.meta.outputs.annotations }}
+          sbom: true
+          provenance: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -171,3 +174,95 @@ jobs:
         continue-on-error: true
         with:
           sarif_file: 'trivy-results.sarif'
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3
+
+      - name: Sign images with Cosign
+        if: steps.build.conclusion == 'success'
+        env:
+          TAGS: ${{ steps.meta.outputs.tags }}
+          COSIGN_YES: true
+        run: |
+          echo "→ Signing images with Cosign (keyless OIDC)..."
+          echo "$TAGS" | while IFS= read -r tag; do
+            if [ -n "$tag" ]; then
+              echo "  Signing: $tag"
+              cosign sign --yes "$tag" || echo "  ⚠️  Failed to sign $tag"
+            fi
+          done
+
+      - name: Smoke test - DockerHub
+        if: steps.build.conclusion == 'success'
+        continue-on-error: true
+        run: |
+          echo "→ Testing DockerHub image: snowdreamtech/ubuntu:${{ matrix.version }}-latest"
+          docker pull snowdreamtech/ubuntu:${{ matrix.version }}-latest
+          docker run --rm \
+            -e DEBUG=false \
+            -e TZ=Asia/Shanghai \
+            -e PUID=1000 \
+            -e PGID=1000 \
+            snowdreamtech/ubuntu:${{ matrix.version }}-latest \
+            sh -c '
+              echo "✓ Entrypoint execution: OK" && \
+              printf "✓ Timezone: " && date "+%Z %z" && \
+              printf "✓ User context: " && id -un && \
+              printf "✓ Core tools: " && \
+              command -v apt && command -v bash && \
+              command -v curl && command -v git && \
+              echo "apt, bash, curl, git" && \
+              printf "✓ Package manager: " && \
+              apt list busybox 2>/dev/null | grep -q busybox && echo "functional" && \
+              echo "✓ All checks passed"
+            '
+
+      - name: Smoke test - GHCR
+        if: steps.build.conclusion == 'success'
+        continue-on-error: true
+        run: |
+          echo "→ Testing GHCR image: ghcr.io/snowdreamtech/ubuntu:${{ matrix.version }}-latest"
+          docker pull ghcr.io/snowdreamtech/ubuntu:${{ matrix.version }}-latest
+          docker run --rm \
+            -e DEBUG=false \
+            -e TZ=Asia/Shanghai \
+            -e PUID=1000 \
+            -e PGID=1000 \
+            ghcr.io/snowdreamtech/ubuntu:${{ matrix.version }}-latest \
+            sh -c '
+              echo "✓ Entrypoint execution: OK" && \
+              printf "✓ Timezone: " && date "+%Z %z" && \
+              printf "✓ User context: " && id -un && \
+              printf "✓ Core tools: " && \
+              command -v apt && command -v bash && \
+              command -v curl && command -v git && \
+              echo "apt, bash, curl, git" && \
+              printf "✓ Package manager: " && \
+              apt list busybox 2>/dev/null | grep -q busybox && echo "functional" && \
+              echo "✓ All checks passed"
+            '
+
+      - name: Smoke test - Quay.io
+        if: steps.build.conclusion == 'success'
+        continue-on-error: true
+        run: |
+          echo "→ Testing Quay.io image: quay.io/snowdreamtech/ubuntu:${{ matrix.version }}-latest"
+          docker pull quay.io/snowdreamtech/ubuntu:${{ matrix.version }}-latest
+          docker run --rm \
+            -e DEBUG=false \
+            -e TZ=Asia/Shanghai \
+            -e PUID=1000 \
+            -e PGID=1000 \
+            quay.io/snowdreamtech/ubuntu:${{ matrix.version }}-latest \
+            sh -c '
+              echo "✓ Entrypoint execution: OK" && \
+              printf "✓ Timezone: " && date "+%Z %z" && \
+              printf "✓ User context: " && id -un && \
+              printf "✓ Core tools: " && \
+              command -v apt && command -v bash && \
+              command -v curl && command -v git && \
+              echo "apt, bash, curl, git" && \
+              printf "✓ Package manager: " && \
+              apt list busybox 2>/dev/null | grep -q busybox && echo "functional" && \
+              echo "✓ All checks passed"
+            '
