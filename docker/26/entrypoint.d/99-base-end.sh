@@ -1,6 +1,12 @@
 #!/bin/sh
 set -e
 
+# Enable debug mode if DEBUG=true
+if [ "${DEBUG}" = "true" ]; then
+    set -x
+    echo "Running: $(basename "$0")"
+fi
+
 # set workdir
 if [ -z "${WORKDIR}" ]; then
   WORKDIR="/root"
@@ -20,3 +26,6 @@ if [ "${KEEPALIVE}" -eq 1 ]; then
   wait
   # sleep infinity & wait
 fi
+
+# Exit successfully
+exit 0

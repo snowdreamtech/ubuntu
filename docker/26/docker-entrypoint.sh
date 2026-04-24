@@ -1,15 +1,22 @@
 #!/bin/sh
 set -e
 
-if [ "$DEBUG" = "true" ]; then echo "→ [ENTRYPOINT] Executing all scripts in /usr/local/bin/entrypoint.d"; fi
+# Enable debug mode if DEBUG=true
+if [ "${DEBUG}" = "true" ]; then
+    set -x
+fi
 
-for script in /usr/local/bin/entrypoint.d/*; do
-  if [ -x "$script" ]; then
-    if [ "$DEBUG" = "true" ]; then echo "→ Running $script"; fi
-    "$script" "$@"
-  else
-    if [ "$DEBUG" = "true" ]; then echo "⚠️ Skipping $script (not executable)"; fi
-  fi
-done
+# Execute all scripts in entrypoint.d/
+if [ -d /usr/local/bin/entrypoint.d ]; then
+    for script in /usr/local/bin/entrypoint.d/*; do
+        if [ -x "$script" ]; then
+            if [ "${DEBUG}" = "true" ]; then
+                echo "Executing: $script"
+            fi
+            "$script" "$@"
+        fi
+    done
+fi
 
-if [ "$DEBUG" = "true" ]; then echo "→ [ENTRYPOINT] Done."; fi
+# Execute the main command
+exec "$@"

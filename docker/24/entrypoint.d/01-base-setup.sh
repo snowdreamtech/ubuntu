@@ -1,6 +1,12 @@
 #!/bin/sh
 set -e
 
+# Enable debug mode if DEBUG=true
+if [ "${DEBUG}" = "true" ]; then
+    set -x
+    echo "Running: $(basename "$0")"
+fi
+
 # Create a user with PUID and PGID
 if [ "${USER}" != "root" ] && [ ! -d "/home/${USER}" ] && [ "${PUID}" -ne 0 ] && [ "${PGID}" -ne 0 ]; then
     addgroup --gid "${PGID}" "${USER}";
@@ -18,3 +24,6 @@ if [ -z "${UMASK}" ]; then
   UMASK=022
 fi
 umask "${UMASK}"
+
+# Exit successfully
+exit 0
