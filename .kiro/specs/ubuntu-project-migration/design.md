@@ -29,7 +29,7 @@ This document defines the technical design for migrating Ubuntu Docker image pro
 
 The migration follows a layered architecture pattern:
 
-\`\`\`
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                    GitHub Actions Layer                      │
 │  (CI/CD Orchestration, Multi-Platform Builds, Security)     │
@@ -44,11 +44,11 @@ The migration follows a layered architecture pattern:
 │                   Container Runtime Layer                    │
 │  (Dockerfile, Entrypoint, Scripts, Configuration)           │
 └─────────────────────────────────────────────────────────────┘
-\`\`\`
+```
 
 ### Directory Structure
 
-\`\`\`
+```
 ubuntu/
 ├── .github/
 │   └── workflows/
@@ -75,11 +75,11 @@ ubuntu/
 │       └── entrypoint.d/
 ├── scripts/                        # Build and maintenance scripts
 └── .kiro/specs/ubuntu-project-migration/  # This specification
-\`\`\`
+```
 
 ### Migration Workflow
 
-\`\`\`mermaid
+```mermaid
 graph TD
     A[Start Migration] --> B[Verify dev Branch]
     B --> C[Analyze Reference Project]
@@ -97,7 +97,7 @@ graph TD
     M --> N{More Changes?}
     N -->|Yes| D
     N -->|No| O[Migration Complete]
-\`\`\`
+```
 
 ## Components and Interfaces
 
@@ -156,14 +156,14 @@ graph TD
 **Purpose**: Provide flexible, modular container initialization
 
 **Architecture**:
-\`\`\`
+```
 docker-entrypoint.sh (orchestrator)
     ↓
 entrypoint.d/ (modular scripts)
     ├── 00-base-init.sh      # Early initialization
     ├── 01-base-setup.sh     # Configuration setup
     └── 99-base-end.sh       # Final setup steps
-\`\`\`
+```
 
 **Execution Flow**:
 
@@ -201,7 +201,7 @@ entrypoint.d/ (modular scripts)
 - Manual workflow dispatch with version selection
 
 **Matrix Strategy**:
-\`\`\`yaml
+```yaml
 matrix:
   include:
     - version: "22"
@@ -216,7 +216,7 @@ matrix:
     - version: "26"
       codename: "resolute"
       is_latest: false
-\`\`\`
+```
 
 **Architecture Support by Version**:
 
@@ -281,7 +281,7 @@ matrix:
 
 ### Docker Image Metadata
 
-\`\`\`yaml
+```yaml
 OCI Labels:
   org.opencontainers.image.authors: "Snowdream Tech"
   org.opencontainers.image.title: "Ubuntu Base Image"
@@ -295,11 +295,11 @@ OCI Labels:
   org.opencontainers.image.url: "<https://github.com/snowdreamtech/ubuntu>"
   org.opencontainers.image.created: "{build_timestamp}"
   org.opencontainers.image.revision: "{git_commit_sha}"
-\`\`\`
+```
 
 ### Environment Variables
 
-\`\`\`yaml
+```yaml
 Build-time Arguments:
   DEBIAN_FRONTEND: "noninteractive"  # Suppress interactive prompts
   KEEPALIVE: "0"                     # Keep container running (0=no, 1=yes)
@@ -315,11 +315,11 @@ Build-time Arguments:
 Runtime Environment:
   All build-time arguments are promoted to environment variables
   Additional variables can be set at container runtime
-\`\`\`
+```
 
 ### Version Configuration
 
-\`\`\`yaml
+```yaml
 Version:
   folder: "22" | "24" | "25" | "26"
   version: "22.04" | "24.04" | "25.10" | "26.04"
@@ -332,11 +332,11 @@ Version:
     - "linux/ppc64le"
     - "linux/s390x"
     - "linux/riscv64"  # Only for versions 24, 25, 26
-\`\`\`
+```
 
 ### Commit Message Structure
 
-\`\`\`yaml
+```yaml
 Format: "<type>(<scope>): <description>"
 
 Type:
@@ -362,7 +362,7 @@ Description:
   - Imperative mood
   - No period at end
   - English only
-\`\`\`
+```
 
 ## Error Handling
 
@@ -496,12 +496,12 @@ This project is primarily Infrastructure as Code (IaC) focused on Docker image b
 - CI: All Dockerfiles in repository
 
 **Example**:
-\`\`\`bash
+```bash
 hadolint docker/22/Dockerfile
 hadolint docker/24/Dockerfile
 hadolint docker/25/Dockerfile
 hadolint docker/26/Dockerfile
-\`\`\`
+```
 
 ### 2. Shell Script Validation
 
@@ -521,10 +521,10 @@ hadolint docker/26/Dockerfile
 - CI: All scripts in repository
 
 **Example**:
-\`\`\`bash
+```bash
 shellcheck docker/*/docker-entrypoint.sh
 shellcheck docker/*/entrypoint.d/*.sh
-\`\`\`
+```
 
 ### 3. Workflow Validation
 
@@ -545,10 +545,10 @@ shellcheck docker/*/entrypoint.d/*.sh
 - CI: All workflows in repository
 
 **Example**:
-\`\`\`bash
+```bash
 yamllint .github/workflows/docker.yml
 actionlint .github/workflows/docker.yml
-\`\`\`
+```
 
 ### 4. Integration Tests
 
@@ -567,38 +567,38 @@ docker build -t ubuntu-test:${version} docker/${version}/
 
 #### Test 2: Container Startup
 
-\`\`\`bash
+```bash
 docker run --rm ubuntu-test:${version} echo "Hello"
-\`\`\`
+```
 
 **Expected**: Container starts, executes command, exits cleanly
 
 #### Test 3: Entrypoint Execution
 
-\`\`\`bash
+```bash
 docker run --rm -e DEBUG=true ubuntu-test:${version}
-\`\`\`
+```
 
 **Expected**: Entrypoint scripts execute in order, debug logs visible
 
 #### Test 4: Non-Root User Creation
 
-\`\`\`bash
+```bash
 docker run --rm -e PUID=1000 -e PGID=1000 -e USER=testuser ubuntu-test:${version} id
-\`\`\`
+```
 
 **Expected**: User created with correct UID/GID
 
 #### Test 5: Essential Tools Available
 
-\`\`\`bash
+```bash
 docker run --rm ubuntu-test:${version} sh -c '
   command -v curl && \
   command -v git && \
   command -v jq && \
   command -v vim
 '
-\`\`\`
+```
 
 **Expected**: All essential tools are installed and accessible
 
@@ -625,7 +625,7 @@ docker pull quay.io/snowdreamtech/ubuntu:${version}-latest
 
 ##### Test 2: Comprehensive Functionality
 
-\`\`\`bash
+```bash
 docker run --rm \
   -e DEBUG=false \
   -e TZ=Asia/Shanghai \
@@ -644,15 +644,15 @@ docker run --rm \
     apt list busybox 2>/dev/null | grep -q busybox && echo "functional" && \
     echo "✓ All checks passed"
   '
-\`\`\`
+```
 
 **Expected**: All checks pass, correct timezone, user context, tools available
 
 ##### Test 3: Multi-Platform Manifest
 
-\`\`\`bash
+```bash
 docker buildx imagetools inspect ${image_tag}
-\`\`\`
+```
 
 **Expected**: Manifest shows all expected platforms for the version
 
@@ -682,11 +682,11 @@ docker buildx imagetools inspect ${image_tag}
 - Results uploaded to GitHub Security tab (SARIF format)
 
 **Example**:
-\`\`\`bash
+```bash
 trivy image --exit-code 1 --severity HIGH,CRITICAL \
   --ignore-unfixed \
   snowdreamtech/ubuntu:${version}-latest
-\`\`\`
+```
 
 ### 7. Commit Message Validation
 
@@ -709,9 +709,9 @@ trivy image --exit-code 1 --severity HIGH,CRITICAL \
 - CI: All commits in PR
 
 **Example**:
-\`\`\`bash
+```bash
 echo "feat(docker): add Ubuntu 22.04 support" | commitlint
-\`\`\`
+```
 
 ### 8. Test Execution Strategy
 
@@ -826,7 +826,7 @@ Each atomic commit should:
 5. Include descriptive commit message
 
 Example commit sequence:
-\`\`\`
+```
 feat(docker): create version folder structure
 feat(docker): add Ubuntu 22.04 Dockerfile
 feat(docker): add Ubuntu 22.04 entrypoint scripts
@@ -840,7 +840,7 @@ ci(workflow): add multi-platform build workflow
 ci(workflow): configure architecture support per version
 ci(workflow): add version codename tags
 docs(readme): update with new project structure
-\`\`\`
+```
 
 ### Cross-Platform Considerations
 
