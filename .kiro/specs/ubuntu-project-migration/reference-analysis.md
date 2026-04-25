@@ -108,7 +108,7 @@ fi
 exec "$@"
 ```
 
-### Key Implementation Patterns
+### Key Patterns in docker-entrypoint.sh
 
 1. **POSIX Compliance**: Uses `#!/bin/sh` for maximum compatibility
 2. **Fail-Fast**: Uses `set -e` to exit on errors
@@ -175,7 +175,7 @@ exit 0
 - Service startup preparation
 - Cleanup tasks
 
-### Key Implementation Patterns
+### Key Patterns in entrypoint.d Scripts
 
 1. **POSIX Compliance**: Uses `#!/bin/sh`
 2. **Fail-Fast**: Uses `set -e`
@@ -281,7 +281,7 @@ jobs:
           sarif_file: 'trivy-results.sarif'
 ```
 
-### Key Implementation Patterns
+### Key Patterns in GitHub Workflow
 
 1. **Multi-Trigger**: Push, schedule, manual dispatch
 2. **Matrix Strategy**: Build multiple versions in parallel
@@ -387,7 +387,7 @@ platforms: linux/amd64,linux/arm64,linux/armhf,linux/ppc64le,linux/s390x
 platforms: linux/amd64,linux/arm64,linux/armhf,linux/ppc64le,linux/s390x,linux/riscv64
 ```
 
-### Key Implementation Patterns
+### Key Patterns in Architecture Support
 
 1. **Version-Specific**: Different versions support different architectures
 2. **Official Support**: Based on official Debian/Ubuntu Docker Hub specifications
