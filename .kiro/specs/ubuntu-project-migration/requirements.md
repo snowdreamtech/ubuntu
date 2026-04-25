@@ -27,7 +27,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 **User Story:** As a Migration_Agent, I want to establish the base project structure from the Current_Project dev branch, so that I have a clean foundation for migration.
 
-#### Acceptance Criteria for This Requirement
+#### Acceptance Criteria for Requirement 1
 
 1. THE Migration_Agent SHALL use the Current_Project dev branch as the base for all migration operations
 2. WHEN starting the migration, THE Migration_Agent SHALL verify the dev branch exists and is checked out
@@ -38,7 +38,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 **User Story:** As a Migration_Agent, I want to analyze the Reference_Project structure, so that I can apply consistent patterns to the Current_Project.
 
-#### Acceptance Criteria for This Requirement
+#### Acceptance Criteria for Requirement 2
 
 1. THE Migration_Agent SHALL read the Reference_Project main branch from /Users/snowdream/Workspace/snowdreamtech/debian
 2. THE Migration_Agent SHALL identify the standard Dockerfile structure from the Reference_Project
@@ -51,7 +51,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 **User Story:** As a Migration_Agent, I want to migrate valid code from the Source_Project, so that the Current_Project contains all necessary implementation logic.
 
-#### Acceptance Criteria for This Requirement
+#### Acceptance Criteria for Requirement 3
 
 1. THE Migration_Agent SHALL read the Source_Project main branch from /Users/snowdream/Workspace/snowdreamtech/ubuntu0
 2. WHEN identifying valid code, THE Migration_Agent SHALL extract Dockerfile content from the Source_Project
@@ -64,7 +64,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 **User Story:** As a Migration_Agent, I want to maintain version-specific folders, so that each Ubuntu version has isolated configuration.
 
-#### Acceptance Criteria for This Requirement
+#### Acceptance Criteria for Requirement 4
 
 1. THE Migration_Agent SHALL create or maintain Version_Folders for versions 22, 24, 25, and 26 under the docker/ directory
 2. FOR ALL Version_Folders, THE Migration_Agent SHALL ensure each contains a Dockerfile
@@ -76,7 +76,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 **User Story:** As a Migration_Agent, I want to standardize Dockerfiles across all versions, so that they follow consistent patterns and reference official Ubuntu base images.
 
-#### Acceptance Criteria for This Requirement
+#### Acceptance Criteria for Requirement 5
 
 1. FOR ALL Dockerfiles, THE Migration_Agent SHALL use the FROM directive with official Ubuntu base images
 2. WHEN writing the FROM directive for version 22, THE Migration_Agent SHALL use "FROM ubuntu:22.04"
@@ -89,7 +89,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 **User Story:** As a Migration_Agent, I want to apply consistent Docker image tagging, so that images follow semantic versioning and include version prefixes.
 
-#### Acceptance Criteria for This Requirement
+#### Acceptance Criteria for Requirement 6
 
 1. THE Migration_Agent SHALL use three-digit semantic versioning for Docker_Tags (e.g., 22.04.0)
 2. THE Migration_Agent SHALL construct Final_Tags by combining the major version with the Docker_Tag
@@ -102,7 +102,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 **User Story:** As a Migration_Agent, I want to configure architecture support per version, so that each Ubuntu version builds for its officially supported platforms.
 
-#### Acceptance Criteria for This Requirement
+#### Acceptance Criteria for Requirement 7
 
 1. THE Migration_Agent SHALL reference <https://hub.docker.com/_/ubuntu> for official Architecture support information
 2. THE Migration_Agent SHALL reference the Source_Project GitHub workflow for existing Architecture configurations
@@ -114,7 +114,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 **User Story:** As a Migration_Agent, I want to add version codename tags to the docker.yml workflow, so that Docker images can be referenced by Ubuntu release codenames.
 
-#### Acceptance Criteria for This Requirement
+#### Acceptance Criteria for Requirement 8
 
 1. THE Migration_Agent SHALL modify the docker.yml workflow to include Version_Codename tags
 2. WHEN configuring version 22.04, THE Migration_Agent SHALL add the "jammy" tag
@@ -127,7 +127,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 **User Story:** As a Migration_Agent, I want to execute changes atomically, so that each logical change is isolated in version control.
 
-#### Acceptance Criteria for This Requirement
+#### Acceptance Criteria for Requirement 9
 
 1. THE Migration_Agent SHALL create one Atomic_Commit for each independent logical change
 2. WHEN completing a logical change unit, THE Migration_Agent SHALL immediately commit before proceeding to the next change
@@ -139,7 +139,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 **User Story:** As a Migration_Agent, I want to write commit messages following Conventional Commits specification, so that the commit history is standardized and machine-readable.
 
-#### Acceptance Criteria for This Requirement
+#### Acceptance Criteria for Requirement 10
 
 1. THE Migration_Agent SHALL format all commit messages as "<type>(<scope>): <description>"
 2. THE Migration_Agent SHALL write commit message headers in English only
@@ -154,7 +154,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 **User Story:** As a Migration_Agent, I want to automatically commit changes without pushing, so that the developer retains control over remote repository state.
 
-#### Acceptance Criteria for This Requirement
+#### Acceptance Criteria for Requirement 11
 
 1. THE Migration_Agent SHALL automatically execute git commit after each logical change
 2. THE Migration_Agent SHALL NOT automatically execute git push to remote repositories
@@ -166,7 +166,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 **User Story:** As a Migration_Agent, I want to ensure all scripts and configurations work across platforms, so that the project supports Linux, macOS, and Windows development environments.
 
-#### Acceptance Criteria for This Requirement
+#### Acceptance Criteria for Requirement 12
 
 1. THE Migration_Agent SHALL use relative paths in all scripts and configurations
 2. THE Migration_Agent SHALL NOT use absolute paths starting with /Users/, C:\, or ~
@@ -178,7 +178,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 **User Story:** As a Migration_Agent, I want to follow all project AI rules, so that the migration adheres to established project standards.
 
-#### Acceptance Criteria for This Requirement
+#### Acceptance Criteria for Requirement 13
 
 1. THE Migration_Agent SHALL read and follow all rules in .agent/rules/ before executing migration tasks
 2. THE Migration_Agent SHALL apply the Triple Guarantee Quality Mechanism for all code changes
@@ -190,7 +190,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 **User Story:** As a Migration_Agent, I want to align content structure with the Reference_Project while respecting system differences, so that Ubuntu-specific requirements are properly handled.
 
-#### Acceptance Criteria for This Requirement
+#### Acceptance Criteria for Requirement 14
 
 1. THE Migration_Agent SHALL use the Reference_Project as the structural template for Dockerfiles
 2. THE Migration_Agent SHALL use the Reference_Project as the structural template for docker-entrypoint.sh
@@ -203,7 +203,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 **User Story:** As a Migration_Agent, I want to verify all changes pass linting and formatting checks, so that code quality standards are maintained.
 
-#### Acceptance Criteria for This Requirement
+#### Acceptance Criteria for Requirement 15
 
 1. THE Migration_Agent SHALL run ShellCheck on all .sh scripts before committing
 2. THE Migration_Agent SHALL run hadolint on all Dockerfiles before committing
@@ -215,7 +215,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 **User Story:** As a Migration_Agent, I want to correctly resolve workspace paths, so that I access the correct project directories.
 
-#### Acceptance Criteria for This Requirement
+#### Acceptance Criteria for Requirement 16
 
 1. THE Migration_Agent SHALL recognize the Current_Project is in the "ubuntu" folder of the workspace
 2. THE Migration_Agent SHALL recognize the Source_Project is in the "ununtu0" folder of the workspace (note the spelling)

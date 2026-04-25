@@ -558,12 +558,10 @@ actionlint .github/workflows/docker.yml
 
 #### Test 1: Image Build Success
 
-\`\`\`bash
-
+```bash
 # For each version (22, 24, 25, 26)
-
 docker build -t ubuntu-test:${version} docker/${version}/
-\`\`\`
+```
 
 **Expected**: Build completes without errors
 
@@ -610,26 +608,22 @@ docker run --rm ubuntu-test:${version} sh -c '
 
 **Test Cases**:
 
-#### Test 1: Multi-Registry Availability
+##### Test 1: Multi-Registry Availability
 
-\`\`\`bash
-
+```bash
 # Test DockerHub
-
 docker pull snowdreamtech/ubuntu:${version}-latest
 
 # Test GHCR
-
 docker pull ghcr.io/snowdreamtech/ubuntu:${version}-latest
 
 # Test Quay.io
-
 docker pull quay.io/snowdreamtech/ubuntu:${version}-latest
-\`\`\`
+```
 
 **Expected**: Images are pullable from all registries
 
-#### Test 2: Comprehensive Functionality
+##### Test 2: Comprehensive Functionality
 
 \`\`\`bash
 docker run --rm \
@@ -654,7 +648,7 @@ docker run --rm \
 
 **Expected**: All checks pass, correct timezone, user context, tools available
 
-#### Test 3: Multi-Platform Manifest
+##### Test 3: Multi-Platform Manifest
 
 \`\`\`bash
 docker buildx imagetools inspect ${image_tag}
