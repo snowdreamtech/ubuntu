@@ -1,44 +1,44 @@
 set number    " Show line numbers
 set hlsearch    " Highlight search matches
-set autoindent    " Auto indent
-set showmode    " Show current mode in bottom left
+set autoindent    " Enable auto-indentation
+set showmode    " Show current mode in status line
 syntax on    " Enable syntax highlighting
-set nocompatible    " Disable compatibility mode
-set textwidth=80    " Set line width, auto wrap at 80 characters. 0 means no auto wrap
-set noswapfile    " No swap files to reduce conflicts
-set nobackup    " No backup files to reduce conflicts
-set nowritebackup    " No write backup files to reduce conflicts
+set nocompatible    " Disable vi compatibility mode
+set textwidth=80    " Set line width to 80 characters (0 disables auto-wrap)
+set noswapfile    " Disable swap files to reduce conflicts
+set nobackup    " Disable backup files to reduce conflicts
+set nowritebackup    " Disable write backup to reduce conflicts
 set history=1000    " Set command history length
-set tabstop=4    " Set tab length
-set shiftwidth=2    " Set auto indent spaces
-set showcmd    " Show command
+set tabstop=4    " Set tab width to 4 spaces
+set shiftwidth=2    " Set auto-indent width to 2 spaces
+set showcmd    " Show command in status line
 set showmatch    " Show matching brackets
-set ignorecase    " Ignore case in search
-set smartcase    " If ignorecase is on, search with one uppercase letter is case-sensitive; otherwise case-insensitive
-set incsearch    " Show current match while typing search command
-set nolist    " Don't show invisible characters
+set ignorecase    " Ignore case in search patterns
+set smartcase    " Override ignorecase if search pattern contains uppercase
+set incsearch    " Show incremental search matches
+set nolist    " Don't display invisible characters
 if has('mouse')
   set mouse-=a
-endif    " Mouse support enabled, allows copy and paste
-set wrap    " Auto wrap lines
-set linebreak    " Only wrap at specified characters (spaces, hyphens, punctuation), not in the middle of words
-set wrapmargin=2    " Number of characters between fold and right edge of window
-set scrolloff=5    " Minimum number of lines to keep above and below cursor when scrolling vertically
-set sidescrolloff=15    " Minimum number of characters to keep left and right of cursor when scrolling horizontally
-set laststatus=2    " Always show status line. 0=never, 1=only with multiple windows, 2=always
+endif    " Enable mouse support with copy/paste capability
+set wrap    " Enable line wrapping
+set linebreak    " Break lines at word boundaries
+set wrapmargin=2    " Set margin between wrap point and window edge
+set scrolloff=5    " Keep 5 lines visible above/below cursor when scrolling
+set sidescrolloff=15    " Keep 15 characters visible left/right of cursor
+set laststatus=2    " Always show status line (0=never, 1=multi-window, 2=always)
 set ruler    " Show cursor position in status line
 set expandtab    " Use spaces instead of tabs
-set softtabstop=4    " Number of spaces for tab
+set softtabstop=4    " Number of spaces per tab
 set cursorline    " Highlight current line
 set cursorcolumn    " Highlight current column
-set fileencodings=ucs-bom,utf-8,gbk,gb2312,cp936,gb18030,big5,latin-1    " Fix character encoding issues
-set encoding=utf-8    " Fix character encoding issues
-set termencoding=utf-8    " Fix character encoding issues
-set fileencoding=utf-8    " Fix character encoding issues
-set autochdir    " Auto change working directory to the directory of the current file
-set visualbell    " Use visual bell instead of beeping on errors
-set autoread    " Auto reload file if changed externally
-set autowrite    " Auto save when executing external commands
-set wildmenu    " Command-line completion with Tab key
-set wildmode=longest:list,full    " Command-line completion behavior: show list on first Tab, cycle through on subsequent Tabs
-hi Normal ctermfg=NONE ctermbg=NONE    " Transparent VIM background
+set fileencodings=ucs-bom,utf-8,gbk,gb2312,cp936,gb18030,big5,latin-1    " File encoding detection order
+set encoding=utf-8    " Set internal encoding to UTF-8
+set termencoding=utf-8    " Set terminal encoding to UTF-8
+set fileencoding=utf-8    " Set default file encoding to UTF-8
+set autochdir    " Auto change working directory to current file's directory
+set visualbell    " Use visual bell instead of beeping
+set autoread    " Auto reload file when changed externally
+set autowrite    " Auto save before executing external commands
+set wildmenu    " Enable command-line completion menu
+set wildmode=longest:list,full    " Command-line completion mode
+hi Normal ctermfg=NONE ctermbg=NONE    " Transparent background
