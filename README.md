@@ -1,299 +1,295 @@
 # Docker Images for Ubuntu
 
-[![Docker](https://img.shields.io/github/actions/workflow/status/snowdreamtech/ubuntu/docker.yml?branch=main&label=Docker&logo=github)](https://github.com/snowdreamtech/ubuntu/actions/workflows/docker.yml)
-[![Docker Image Size](https://img.shields.io/docker/image-size/snowdreamtech/ubuntu/latest?logo=docker)](https://hub.docker.com/r/snowdreamtech/ubuntu)
-[![Docker Pulls](https://img.shields.io/docker/pulls/snowdreamtech/ubuntu?logo=docker)](https://hub.docker.com/r/snowdreamtech/ubuntu)
-[![Docker Stars](https://img.shields.io/docker/stars/snowdreamtech/ubuntu?logo=docker)](https://hub.docker.com/r/snowdreamtech/ubuntu)
+[![CI Pipeline](https://img.shields.io/github/actions/workflow/status/snowdreamtech/ubuntu/ci.yml?branch=main&label=CI%20Pipeline)](https://github.com/snowdreamtech/ubuntu/actions/workflows/ci.yml)
+[![CD Pipeline](https://img.shields.io/github/actions/workflow/status/snowdreamtech/ubuntu/cd.yml?branch=main&label=CD%20Pipeline)](https://github.com/snowdreamtech/ubuntu/actions/workflows/cd.yml)
+[![Docker Hub](https://img.shields.io/docker/pulls/snowdreamtech/ubuntu?logo=docker)](https://hub.docker.com/r/snowdreamtech/ubuntu)
+[![GitHub Container Registry](https://img.shields.io/badge/ghcr.io-snowdreamtech%2Fubuntu-blue?logo=github)](https://github.com/snowdreamtech/ubuntu/pkgs/container/ubuntu)
+[![Multi-Architecture](https://img.shields.io/badge/Architectures-6-blue)](https://github.com/snowdreamtech/ubuntu)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/license/MIT)
+[![Release](https://img.shields.io/github/v/release/snowdreamtech/ubuntu?logo=github&sort=semver)](https://github.com/snowdreamtech/ubuntu/releases/latest)
 
-[English](README.md) | [简体中文](README_zh-CN.md)
+[English](README.md) | [简体中文](README.zh_CN.md)
 
-Production-ready Ubuntu Docker images with multi-platform support, comprehensive tooling, and security features.
+Enterprise-grade Docker base images for Ubuntu with comprehensive multi-architecture support and production-ready configurations.
 
 ## 🌟 Features
 
-- **Multi-Version Support**: Ubuntu 22.04 (Jammy), 24.04 (Noble), 25.10 (Questing), 26.04 (Resolute)
-- **Multi-Platform**: Supports amd64, arm64, armhf, ppc64le, s390x, and riscv64 (24.04+)
-- **Multi-Registry**: Available on DockerHub, GitHub Container Registry (GHCR), and Quay.io
-- **Essential Tooling**: Pre-installed curl, git, vim, jq, gosu, and network utilities
-- **Flexible User Management**: Support for custom PUID/PGID and non-root execution
-- **Modular Entrypoint**: Extensible initialization system via entrypoint.d/ scripts
-- **Security First**: Vulnerability scanning, SBOM generation, provenance attestation, and image signing
-- **Debug Support**: Conditional debug logging via DEBUG environment variable
+- **Multi-Architecture Support**: Native support for up to 6 architectures (amd64, arm64, armhf, ppc64le, s390x, riscv64)
+- **Multiple Ubuntu Versions**: Ubuntu 22.04 (Jammy), 24.04 (Noble), 25.10 (Questing), and 26.04 (Resolute)
+- **Minimal Base**: Built on official Ubuntu base images for optimal compatibility
+- **Production Ready**: Pre-configured with essential tools and security hardening
+- **Flexible User Management**: Support for custom PUID/PGID
+- **Modular Entrypoint System**: Extensible initialization scripts
+- **Automated Builds**: CI/CD pipeline with automated testing and publishing
 
 ## 📦 Supported Versions
 
-| Version | Codename | Ubuntu Release | Architectures | Status |
-|---------|----------|----------------|---------------|--------|
-| 22      | jammy    | 22.04 LTS      | 5 platforms   | ✅ Supported |
-| 24      | noble    | 24.04 LTS      | 6 platforms   | ✅ Latest |
-| 25      | questing | 25.10          | 6 platforms   | ✅ Supported |
-| 26      | resolute | 26.04 LTS      | 6 platforms   | ✅ Supported |
-
-### Architecture Support
-
-- **Ubuntu 22.04 (Jammy)**: linux/amd64, linux/arm64, linux/armhf, linux/ppc64le, linux/s390x
-- **Ubuntu 24.04+ (Noble/Questing/Resolute)**: linux/amd64, linux/arm64, linux/armhf, linux/ppc64le, linux/s390x, linux/riscv64
-
-> **Note**: RISC-V (riscv64) support was added starting with Ubuntu 24.04.
+| Version | Codename | Base Image | Docker Tags | Status |
+|---------|----------|------------|-------------|--------|
+| 26 | Resolute | ubuntu:26.04 | `26-latest`, `26-v26.04.0`, `resolute` | ✅ Active |
+| 25 | Questing | ubuntu:25.10 | `25-latest`, `25-v25.10.0`, `questing` | ✅ Active |
+| 24 | Noble | ubuntu:24.04 | `latest`, `24-latest`, `24-v24.04.0`, `noble` | ✅ Active |
+| 22 | Jammy | ubuntu:22.04 | `22-latest`, `22-v22.04.0`, `jammy` | ✅ Active |
 
 ## 🚀 Quick Start
 
-### Pull from DockerHub
+### Pull from Docker Hub
 
 ```bash
-# Latest version (24.04 Noble)
+# Latest (Ubuntu 24.04 Noble)
 docker pull snowdreamtech/ubuntu:latest
 
-# Specific version by number
-docker pull snowdreamtech/ubuntu:22-latest
-docker pull snowdreamtech/ubuntu:24-latest
-
-# Specific version by codename
-docker pull snowdreamtech/ubuntu:jammy
-docker pull snowdreamtech/ubuntu:noble
-docker pull snowdreamtech/ubuntu:questing
+# Ubuntu 26.04 (Resolute)
+docker pull snowdreamtech/ubuntu:26-latest
+docker pull snowdreamtech/ubuntu:26-v26.04.0
 docker pull snowdreamtech/ubuntu:resolute
+
+# Ubuntu 25.10 (Questing)
+docker pull snowdreamtech/ubuntu:25-latest
+docker pull snowdreamtech/ubuntu:25-v25.10.0
+docker pull snowdreamtech/ubuntu:questing
+
+# Ubuntu 24.04 (Noble)
+docker pull snowdreamtech/ubuntu:24-latest
+docker pull snowdreamtech/ubuntu:24-v24.04.0
+docker pull snowdreamtech/ubuntu:noble
+
+# Ubuntu 22.04 (Jammy)
+docker pull snowdreamtech/ubuntu:22-latest
+docker pull snowdreamtech/ubuntu:22-v22.04.0
+docker pull snowdreamtech/ubuntu:jammy
 ```
 
 ### Pull from GitHub Container Registry
 
 ```bash
+# Latest (Ubuntu 24.04 Noble)
 docker pull ghcr.io/snowdreamtech/ubuntu:latest
+
+# Ubuntu 24.04 (Noble)
 docker pull ghcr.io/snowdreamtech/ubuntu:24-latest
+docker pull ghcr.io/snowdreamtech/ubuntu:24-v24.04.0
 docker pull ghcr.io/snowdreamtech/ubuntu:noble
+
+# Ubuntu 22.04 (Jammy)
+docker pull ghcr.io/snowdreamtech/ubuntu:22-latest
+docker pull ghcr.io/snowdreamtech/ubuntu:22-v22.04.0
+docker pull ghcr.io/snowdreamtech/ubuntu:jammy
 ```
 
-### Pull from Quay.io
+### Basic Usage
 
 ```bash
-docker pull quay.io/snowdreamtech/ubuntu:latest
-docker pull quay.io/snowdreamtech/ubuntu:24-latest
-docker pull quay.io/snowdreamtech/ubuntu:noble
-```
+# Run interactive shell
+docker run -it snowdreamtech/ubuntu:latest
 
-### Run a Container
-
-```bash
-# Basic usage
-docker run --rm -it snowdreamtech/ubuntu:latest bash
-
-# With custom user (non-root)
-docker run --rm -it \
+# Run with custom user
+docker run -it \
   -e PUID=1000 \
   -e PGID=1000 \
   -e USER=myuser \
-  snowdreamtech/ubuntu:latest bash
+  snowdreamtech/ubuntu:latest
 
-# With debug logging
-docker run --rm -it \
+# Keep container running in background
+docker run -d \
+  -e KEEPALIVE=1 \
+  --name my-ubuntu \
+  snowdreamtech/ubuntu:latest
+
+# Run with debug output
+docker run -it \
   -e DEBUG=true \
-  snowdreamtech/ubuntu:latest bash
-
-# With custom timezone
-docker run --rm -it \
-  -e TZ=Asia/Shanghai \
-  snowdreamtech/ubuntu:latest bash
-
-# With custom working directory
-docker run --rm -it \
-  -e WORKDIR=/app \
-  -v $(pwd):/app \
-  snowdreamtech/ubuntu:latest bash
+  snowdreamtech/ubuntu:latest
 ```
 
-## 🏷️ Image Tags
+## 🏗️ Architecture
 
-### Tag Naming Convention
+### Supported Platforms
 
-| Tag Pattern | Description | Example |
-|-------------|-------------|---------|
-| `latest` | Latest stable version (24.04) | `snowdreamtech/ubuntu:latest` |
-| `{version}-latest` | Latest build for specific version | `22-latest`, `24-latest` |
-| `{codename}` | Ubuntu codename | `jammy`, `noble`, `questing`, `resolute` |
-| `{codename}-latest` | Latest build for codename | `jammy-latest`, `noble-latest` |
-| `{version}-{branch}` | Branch builds | `22-dev`, `24-main` |
-| `{version}-nightly` | Nightly builds | `22-nightly`, `24-nightly` |
-| `{version}-YYYYMMDD` | Date-tagged builds | `22-20250115`, `24-20250115` |
-| `{version}.{minor}.{patch}` | Semantic version | `22.04.0`, `24.04.0` |
+| Architecture | Ubuntu 22.04 | Ubuntu 24.04+ | Notes |
+|--------------|--------------|---------------|-------|
+| linux/amd64 | ✅ Supported | ✅ Supported | x86-64 |
+| linux/arm64 | ✅ Supported | ✅ Supported | ARM 64-bit |
+| linux/armhf | ✅ Supported | ✅ Supported | ARM 32-bit v7 |
+| linux/ppc64le | ✅ Supported | ✅ Supported | PowerPC 64-bit LE |
+| linux/s390x | ✅ Supported | ✅ Supported | IBM System z |
+| linux/riscv64 | ❌ Not Available | ✅ Supported | RISC-V 64-bit |
 
-### Version Mapping
+> **Note**: RISC-V (riscv64) support was added starting with Ubuntu 24.04.
 
-| Short Version | Full Version | Codename |
-|---------------|--------------|----------|
-| 22            | 22.04        | jammy    |
-| 24            | 24.04        | noble    |
-| 25            | 25.10        | questing |
-| 26            | 26.04        | resolute |
-
-## 🔧 Environment Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `DEBUG` | `false` | Enable debug logging for entrypoint scripts |
-| `PUID` | `0` | User ID for non-root execution |
-| `PGID` | `0` | Group ID for non-root execution |
-| `USER` | `root` | Username for non-root execution |
-| `WORKDIR` | `/root` | Working directory inside container |
-| `TZ` | System default | Timezone (e.g., `Asia/Shanghai`, `America/New_York`) |
-| `LANG` | `C.UTF-8` | Locale setting |
-| `DEBIAN_FRONTEND` | `noninteractive` | Suppress interactive prompts during package installation |
-
-## 📁 Project Structure
+### Directory Structure
 
 ```text
 ubuntu/
-├── docker/
-│   ├── 22/                         # Ubuntu 22.04 (Jammy)
-│   │   ├── Dockerfile
-│   │   ├── docker-entrypoint.sh
-│   │   └── entrypoint.d/
-│   │       ├── 00-base-init.sh
-│   │       ├── 01-base-setup.sh
-│   │       └── 99-base-end.sh
-│   ├── 24/                         # Ubuntu 24.04 (Noble)
-│   │   ├── Dockerfile
-│   │   ├── docker-entrypoint.sh
-│   │   └── entrypoint.d/
-│   ├── 25/                         # Ubuntu 25.10 (Questing)
-│   │   ├── Dockerfile
-│   │   ├── docker-entrypoint.sh
-│   │   └── entrypoint.d/
-│   └── 26/                         # Ubuntu 26.04 (Resolute)
-│       ├── Dockerfile
-│       ├── docker-entrypoint.sh
-│       └── entrypoint.d/
-└── .github/
-    └── workflows/
-        └── docker.yml              # Multi-platform build workflow
+├── docker/                      # Docker configurations
+│   ├── 22/                      # Ubuntu 22.04 (Jammy)
+│   │   ├── Dockerfile           # Multi-stage Dockerfile
+│   │   ├── docker-entrypoint.sh # Container entrypoint
+│   │   ├── vimrc.local          # Vim configuration
+│   │   └── entrypoint.d/        # Modular entrypoint scripts
+│   ├── 24/                      # Ubuntu 24.04 (Noble)
+│   │   ├── Dockerfile           # Multi-stage Dockerfile
+│   │   ├── docker-entrypoint.sh # Container entrypoint
+│   │   ├── vimrc.local          # Vim configuration
+│   │   └── entrypoint.d/        # Modular entrypoint scripts
+│   ├── 25/                      # Ubuntu 25.10 (Questing)
+│   │   ├── Dockerfile           # Multi-stage Dockerfile
+│   │   ├── docker-entrypoint.sh # Container entrypoint
+│   │   ├── vimrc.local          # Vim configuration
+│   │   └── entrypoint.d/        # Modular entrypoint scripts
+│   ├── 26/                      # Ubuntu 26.04 (Resolute)
+│   │   ├── Dockerfile           # Multi-stage Dockerfile
+│   │   ├── docker-entrypoint.sh # Container entrypoint
+│   │   ├── vimrc.local          # Vim configuration
+│   │   └── entrypoint.d/        # Modular entrypoint scripts
+│   └── README.md                # Docker documentation
+├── .github/workflows/           # CI/CD pipelines
+│   ├── ci.yml                   # Continuous Integration
+│   └── docker.yml               # Docker Build & Deployment
+└── docs/                        # Project documentation
 ```
 
-## 🛠️ Building Locally
+## ⚙️ Configuration
+
+### Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `KEEPALIVE` | 0 | Keep container running (1=yes, 0=no) |
+| `CAP_NET_BIND_SERVICE` | 0 | Enable binding to privileged ports (<1024) |
+| `LANG` | C.UTF-8 | Locale setting for UTF-8 support |
+| `UMASK` | 022 | File creation mask |
+| `DEBUG` | false | Enable debug output in entrypoint scripts |
+| `PASSWORDLESS_SUDO` | false | Enable passwordless sudo for custom user |
+| `PGID` | 0 | Group ID for custom user |
+| `PUID` | 0 | User ID for custom user |
+| `USER` | root | Username (creates user if not root) |
+| `WORKDIR` | /root | Working directory |
+| `TZ` | - | Timezone (e.g., Asia/Shanghai) |
+
+### Installed Packages
+
+Each image includes essential tools for development and operations:
+
+#### System Utilities
+
+- bash, zsh, nano, rsync, lsb-release, procps, sudo, vim
+
+#### Compression Tools
+
+- zip, unzip, bzip2, xz-utils, gzip
+
+#### File & Data Tools
+
+- file, jq
+
+#### Time & Locale
+
+- tzdata
+
+#### Security & Certificates
+
+- openssl, gnupg, ca-certificates
+
+#### Package Management
+
+- aptitude
+
+#### System Monitoring
+
+- sysstat
+
+#### Network Tools
+
+- wget, curl, git, dnsutils, netcat-traditional, traceroute, iputils-ping, net-tools, lsof
+
+#### Container Utilities
+
+- libcap2-bin, gosu
+
+#### Transport
+
+- apt-transport-https
+
+## 🔧 Building Locally
 
 ### Prerequisites
 
-- Docker with Buildx support
-- QEMU for multi-platform builds (optional)
+- Docker 20.10+ or Docker Desktop
+- Docker Buildx (for multi-architecture builds)
 
-### Build a Specific Version
+### Build Commands
 
 ```bash
 # Build Ubuntu 22.04
-docker build -t ubuntu-local:22 docker/22/
+docker build -t ubuntu:22-local docker/22/
 
 # Build Ubuntu 24.04
-docker build -t ubuntu-local:24 docker/24/
+docker build -t ubuntu:24-local docker/24/
 
 # Build Ubuntu 25.10
-docker build -t ubuntu-local:25 docker/25/
+docker build -t ubuntu:25-local docker/25/
 
 # Build Ubuntu 26.04
-docker build -t ubuntu-local:26 docker/26/
-```
+docker build -t ubuntu:26-local docker/26/
 
-### Build Multi-Platform Images
-
-```bash
-# Set up buildx builder
-docker buildx create --name multiplatform --use
-
-# Build for multiple platforms (Ubuntu 24.04)
+# Build with specific platform
 docker buildx build \
-  --platform linux/amd64,linux/arm64,linux/armhf,linux/ppc64le,linux/s390x,linux/riscv64 \
-  -t ubuntu-local:24 \
+  --platform linux/amd64,linux/arm64 \
+  -t ubuntu:24-local \
   docker/24/
 
-# Build for multiple platforms (Ubuntu 22.04 - no riscv64)
+# Build all platforms for Ubuntu 24.04+ (requires buildx)
+docker buildx build \
+  --platform linux/amd64,linux/arm64,linux/armhf,linux/ppc64le,linux/s390x,linux/riscv64 \
+  -t ubuntu:24-multi \
+  docker/24/
+
+# Build all platforms for Ubuntu 22.04 (no riscv64)
 docker buildx build \
   --platform linux/amd64,linux/arm64,linux/armhf,linux/ppc64le,linux/s390x \
-  -t ubuntu-local:22 \
+  -t ubuntu:22-multi \
   docker/22/
 ```
 
-## 🔐 Security Features
+## 📚 Documentation
 
-- **Vulnerability Scanning**: All images are scanned with Trivy for CRITICAL and HIGH severity vulnerabilities
-- **SBOM Generation**: Software Bill of Materials (SBOM) in CycloneDX format attached to all images
-- **Provenance Attestation**: SLSA provenance metadata for supply chain security
-- **Image Signing**: All images are signed with Cosign using keyless OIDC
-- **Egress Audit**: GitHub Actions workflow uses Harden Runner for network egress monitoring
-
-## 📝 Usage Examples
-
-### As a Base Image
-
-```dockerfile
-FROM snowdreamtech/ubuntu:24-latest
-
-# Install additional packages
-RUN apt-get update && \
-    apt-get install -y python3 python3-pip && \
-    rm -rf /var/lib/apt/lists/*
-
-# Copy application
-COPY . /app
-WORKDIR /app
-
-# Run application
-CMD ["python3", "app.py"]
-```
-
-### With Docker Compose
-
-```yaml
-version: '3.8'
-
-services:
-  app:
-    image: snowdreamtech/ubuntu:24-latest
-    environment:
-      - DEBUG=false
-      - TZ=Asia/Shanghai
-      - PUID=1000
-      - PGID=1000
-      - USER=appuser
-      - WORKDIR=/app
-    volumes:
-      - ./app:/app
-    command: bash -c "cd /app && ./run.sh"
-```
-
-### Extending Entrypoint Scripts
-
-Add custom initialization scripts to the `entrypoint.d/` directory:
-
-```dockerfile
-FROM snowdreamtech/ubuntu:24-latest
-
-# Add custom initialization script
-COPY my-custom-init.sh /usr/local/bin/entrypoint.d/50-custom-init.sh
-RUN chmod +x /usr/local/bin/entrypoint.d/50-custom-init.sh
-```
-
-Scripts in `entrypoint.d/` are executed in lexicographic order:
-- `00-base-init.sh` - Early initialization
-- `01-base-setup.sh` - Configuration setup
-- `50-custom-init.sh` - Your custom script
-- `99-base-end.sh` - Final setup steps
+- [Docker Configuration Guide](docker/README.md) - Detailed docker setup and usage
+- [Contributing Guide](CONTRIBUTING.md) - How to contribute to this project
+- [Changelog](CHANGELOG.md) - Version history and release notes
+- [Security Policy](SECURITY.md) - Security reporting and policies
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for details on:
+
+- Code of Conduct
+- Development workflow
+- Commit message conventions
+- Pull request process
+
+## 🔒 Security
+
+Security is a top priority. If you discover a security vulnerability, please follow our [Security Policy](SECURITY.md) for responsible disclosure.
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the **MIT License**.
 Copyright (c) 2026-present [SnowdreamTech Inc.](https://github.com/snowdreamtech)
 See the [LICENSE](./LICENSE) file for the full license text.
 
-## 🔗 Links
+## 🙏 Acknowledgments
 
-- [Docker Hub](https://hub.docker.com/r/snowdreamtech/ubuntu)
-- [GitHub Container Registry](https://github.com/snowdreamtech/ubuntu/pkgs/container/ubuntu)
-- [Quay.io](https://quay.io/repository/snowdreamtech/ubuntu)
-- [Source Code](https://github.com/snowdreamtech/ubuntu)
-- [Issue Tracker](https://github.com/snowdreamtech/ubuntu/issues)
+- Based on official [Ubuntu Docker images](https://hub.docker.com/_/ubuntu)
+- Inspired by best practices from the Docker community
+- Built with [GitHub Actions](https://github.com/features/actions)
 
-## ⭐ Star History
+## 📞 Support
+
+- 📧 Email: <sn0wdr1am@qq.com>
+- 🐛 Issues: [GitHub Issues](https://github.com/snowdreamtech/ubuntu/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/snowdreamtech/ubuntu/discussions)
+
+## Star History
 
 [![Star History Chart](https://api.star-history.com/image?repos=snowdreamtech/ubuntu&type=date&legend=top-left)](https://www.star-history.com/?repos=snowdreamtech%2Fubuntu&type=date&legend=top-left)
