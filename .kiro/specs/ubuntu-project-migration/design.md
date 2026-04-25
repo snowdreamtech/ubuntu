@@ -156,6 +156,7 @@ graph TD
 **Purpose**: Provide flexible, modular container initialization
 
 **Architecture**:
+
 ```
 docker-entrypoint.sh (orchestrator)
     ↓
@@ -201,6 +202,7 @@ entrypoint.d/ (modular scripts)
 - Manual workflow dispatch with version selection
 
 **Matrix Strategy**:
+
 ```yaml
 matrix:
   include:
@@ -496,6 +498,7 @@ This project is primarily Infrastructure as Code (IaC) focused on Docker image b
 - CI: All Dockerfiles in repository
 
 **Example**:
+
 ```bash
 hadolint docker/22/Dockerfile
 hadolint docker/24/Dockerfile
@@ -521,6 +524,7 @@ hadolint docker/26/Dockerfile
 - CI: All scripts in repository
 
 **Example**:
+
 ```bash
 shellcheck docker/*/docker-entrypoint.sh
 shellcheck docker/*/entrypoint.d/*.sh
@@ -545,6 +549,7 @@ shellcheck docker/*/entrypoint.d/*.sh
 - CI: All workflows in repository
 
 **Example**:
+
 ```bash
 yamllint .github/workflows/docker.yml
 actionlint .github/workflows/docker.yml
@@ -608,7 +613,7 @@ docker run --rm ubuntu-test:${version} sh -c '
 
 **Test Cases**:
 
-##### Test 1: Multi-Registry Availability
+#### Test 1: Multi-Registry Availability
 
 ```bash
 # Test DockerHub
@@ -623,7 +628,7 @@ docker pull quay.io/snowdreamtech/ubuntu:${version}-latest
 
 **Expected**: Images are pullable from all registries
 
-##### Test 2: Comprehensive Functionality
+#### Test 2: Comprehensive Functionality
 
 ```bash
 docker run --rm \
@@ -648,7 +653,7 @@ docker run --rm \
 
 **Expected**: All checks pass, correct timezone, user context, tools available
 
-##### Test 3: Multi-Platform Manifest
+#### Test 3: Multi-Platform Manifest
 
 ```bash
 docker buildx imagetools inspect ${image_tag}
@@ -682,6 +687,7 @@ docker buildx imagetools inspect ${image_tag}
 - Results uploaded to GitHub Security tab (SARIF format)
 
 **Example**:
+
 ```bash
 trivy image --exit-code 1 --severity HIGH,CRITICAL \
   --ignore-unfixed \
@@ -709,6 +715,7 @@ trivy image --exit-code 1 --severity HIGH,CRITICAL \
 - CI: All commits in PR
 
 **Example**:
+
 ```bash
 echo "feat(docker): add Ubuntu 22.04 support" | commitlint
 ```
@@ -826,6 +833,7 @@ Each atomic commit should:
 5. Include descriptive commit message
 
 Example commit sequence:
+
 ```
 feat(docker): create version folder structure
 feat(docker): add Ubuntu 22.04 Dockerfile
