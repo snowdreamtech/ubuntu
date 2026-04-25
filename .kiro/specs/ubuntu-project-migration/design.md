@@ -560,7 +560,7 @@ actionlint .github/workflows/docker.yml
 
 \`\`\`bash
 
-# For each version (22, 24, 25, 26)
+## For each version (22, 24, 25, 26)
 
 docker build -t ubuntu-test:${version} docker/${version}/
 \`\`\`
@@ -614,15 +614,15 @@ docker run --rm ubuntu-test:${version} sh -c '
 
 \`\`\`bash
 
-# Test DockerHub
+## Test DockerHub
 
 docker pull snowdreamtech/ubuntu:${version}-latest
 
-# Test GHCR
+## Test GHCR
 
 docker pull ghcr.io/snowdreamtech/ubuntu:${version}-latest
 
-# Test Quay.io
+## Test Quay.io
 
 docker pull quay.io/snowdreamtech/ubuntu:${version}-latest
 \`\`\`
