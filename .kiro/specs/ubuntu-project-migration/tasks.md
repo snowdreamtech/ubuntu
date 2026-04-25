@@ -266,25 +266,25 @@ The implementation is organized into discrete, atomic tasks that can be executed
 
 - [x] 14. Configure architecture support per version
   - [x] 14.1 Add architecture configuration for Ubuntu 22.04
-    - Reference https://hub.docker.com/_/ubuntu for official architecture support
+    - Reference <https://hub.docker.com/_/ubuntu> for official architecture support
     - Configure platforms: linux/amd64, linux/arm64, linux/armhf, linux/ppc64le, linux/s390x
     - Add architecture configuration to workflow matrix or build step
     - _Requirements: 7.1, 7.2, 7.3, 7.4_
 
   - [x] 14.2 Add architecture configuration for Ubuntu 24.04
-    - Reference https://hub.docker.com/_/ubuntu for official architecture support
+    - Reference <https://hub.docker.com/_/ubuntu> for official architecture support
     - Configure platforms: linux/amd64, linux/arm64, linux/armhf, linux/ppc64le, linux/s390x, linux/riscv64
     - Add architecture configuration to workflow matrix or build step
     - _Requirements: 7.1, 7.2, 7.3, 7.4_
 
   - [x] 14.3 Add architecture configuration for Ubuntu 25.10
-    - Reference https://hub.docker.com/_/ubuntu for official architecture support
+    - Reference <https://hub.docker.com/_/ubuntu> for official architecture support
     - Configure platforms: linux/amd64, linux/arm64, linux/armhf, linux/ppc64le, linux/s390x, linux/riscv64
     - Add architecture configuration to workflow matrix or build step
     - _Requirements: 7.1, 7.2, 7.3, 7.4_
 
   - [x] 14.4 Add architecture configuration for Ubuntu 26.04
-    - Reference https://hub.docker.com/_/ubuntu for official architecture support
+    - Reference <https://hub.docker.com/_/ubuntu> for official architecture support
     - Configure platforms: linux/amd64, linux/arm64, linux/armhf, linux/ppc64le, linux/s390x, linux/riscv64
     - Add architecture configuration to workflow matrix or build step
     - _Requirements: 7.1, 7.2, 7.3, 7.4_
@@ -429,7 +429,7 @@ The implementation is organized into discrete, atomic tasks that can be executed
 - [x] 19. Final validation and testing
   - [x] 19.1 Run comprehensive lint checks
     - Run hadolint on all Dockerfiles (docker/*/Dockerfile)
-    - Run ShellCheck on all shell scripts (docker/*/docker-entrypoint.sh, docker/*/entrypoint.d/*.sh)
+    - Run ShellCheck on all shell scripts (docker/_/docker-entrypoint.sh, docker/_/entrypoint.d/*.sh)
     - Run yamllint on all workflow files (.github/workflows/*.yml)
     - Fix any remaining issues
     - _Requirements: 15.1, 15.2, 15.3, 15.4, 15.5_

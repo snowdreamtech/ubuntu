@@ -104,7 +104,7 @@ The migration must maintain atomic commits following Conventional Commits specif
 
 #### Acceptance Criteria
 
-1. THE Migration_Agent SHALL reference https://hub.docker.com/_/ubuntu for official Architecture support information
+1. THE Migration_Agent SHALL reference <https://hub.docker.com/_/ubuntu> for official Architecture support information
 2. THE Migration_Agent SHALL reference the Source_Project GitHub workflow for existing Architecture configurations
 3. FOR ALL Version_Numbers, THE Migration_Agent SHALL configure the docker.yml workflow with the correct Architecture list
 4. WHEN Architecture support differs between versions, THE Migration_Agent SHALL apply version-specific Architecture configurations

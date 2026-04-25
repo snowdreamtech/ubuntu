@@ -158,16 +158,19 @@ exit 0
 ### Common Script Functions
 
 #### 00-base-init.sh
+
 - System initialization
 - Environment validation
 - Directory creation
 
 #### 01-base-setup.sh
+
 - User creation (if PUID/PGID specified)
 - Permission configuration
 - Working directory setup
 
 #### 99-base-end.sh
+
 - Final configuration
 - Service startup preparation
 - Cleanup tasks
@@ -298,29 +301,35 @@ jobs:
 The debian project uses the following tag patterns:
 
 #### Branch-Based Tags
+
 - `{version}-{branch}`: e.g., `11-main`, `12-dev`
 - Applied on push to main/dev branches
 
 #### Latest Tags
+
 - `{version}-latest`: e.g., `11-latest`, `12-latest`
 - Always points to the most recent build for that version
 - `latest`: Global latest tag (only for `is_latest: true` version)
 
 #### Semantic Version Tags
+
 - `{semantic_version}`: e.g., `11.0.0`, `12.0.0`
 - Applied when pushing version tags
 - `{version}-v{semantic_version}`: e.g., `11-v11.0.0`, `12-v12.0.0`
 
 #### Codename Tags
+
 - `{codename}`: e.g., `bullseye`, `bookworm`
 - Debian release codenames
 - `{codename}-latest`: e.g., `bullseye-latest`, `bookworm-latest`
 
 #### Nightly Tags
+
 - `{version}-nightly`: e.g., `11-nightly`, `12-nightly`
 - Applied on scheduled builds
 
 #### Date Tags
+
 - `{version}-{YYYYMMDD}`: e.g., `11-20250115`, `12-20250115`
 - Applied on scheduled builds
 
