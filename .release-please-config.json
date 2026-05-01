@@ -6,7 +6,7 @@
       "component": "22",
       "include-component-in-tag": true,
       "changelog-path": "CHANGELOG.md",
-      "initial-version": "22.04.0",
+      "release-as": "22.04.0",
       "extra-files": [
         {
           "type": "generic",
@@ -20,7 +20,7 @@
       "component": "24",
       "include-component-in-tag": true,
       "changelog-path": "CHANGELOG.md",
-      "initial-version": "24.04.0",
+      "release-as": "24.04.0",
       "extra-files": [
         {
           "type": "generic",
@@ -34,7 +34,7 @@
       "component": "25",
       "include-component-in-tag": true,
       "changelog-path": "CHANGELOG.md",
-      "initial-version": "25.10.0",
+      "release-as": "25.10.0",
       "extra-files": [
         {
           "type": "generic",
@@ -48,7 +48,7 @@
       "component": "26",
       "include-component-in-tag": true,
       "changelog-path": "CHANGELOG.md",
-      "initial-version": "26.04.0",
+      "release-as": "26.04.0",
       "extra-files": [
         {
           "type": "generic",
