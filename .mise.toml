@@ -30,7 +30,7 @@ python = "3.14.4"
 "github:google/addlicense" = "1.2.0"
 
 # Git / commit workflow
-"npm:@commitlint/cli" = "20.5.0"
+"npm:@commitlint/cli" = "20.5.2"
 "npm:@commitlint/config-conventional" = "20.5.0"
 "npm:commitizen" = "4.3.1"
 "npm:cz-conventional-changelog" = "3.3.0"
