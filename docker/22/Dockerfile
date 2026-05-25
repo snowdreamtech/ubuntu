@@ -7,7 +7,7 @@
 #   - Native support for PUID/PGID user mapping.
 #   - Pre-installed with essential dev/ops tooling (Git, Curl, Sudo, etc.).
 
-FROM ubuntu:22.04
+FROM ubuntu:26.04
 
 # Build-time Configuration
 ARG BUILDTIME \
