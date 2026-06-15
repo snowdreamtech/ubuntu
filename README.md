@@ -28,8 +28,8 @@ Enterprise-grade Docker base images for Ubuntu with comprehensive multi-architec
 |---------|----------|------------|-------------|--------|
 | 26 | Resolute | ubuntu:26.04 | `26-latest`, `26-v26.04.0`, `resolute` | ✅ Active |
 | 25 | Questing | ubuntu:25.10 | `25-latest`, `25-v25.10.0`, `questing` | ✅ Active |
-| 24 | Noble | ubuntu:24.04 | `latest`, `24-latest`, `24-v24.04.4`, `noble` | ✅ Active |
-| 22 | Jammy | ubuntu:22.04 | `22-latest`, `22-v22.04.5`, `jammy` | ✅ Active |
+| 24 | Noble | ubuntu:24.04 | `latest`, `24-latest`, `24-v24.04.0`, `noble` | ✅ Active |
+| 22 | Jammy | ubuntu:22.04 | `22-latest`, `22-v22.04.0`, `jammy` | ✅ Active |
 
 ## 🚀 Quick Start
 
@@ -51,12 +51,12 @@ docker pull snowdreamtech/ubuntu:questing
 
 # Ubuntu 24.04 (Noble)
 docker pull snowdreamtech/ubuntu:24-latest
-docker pull snowdreamtech/ubuntu:24-v24.04.4
+docker pull snowdreamtech/ubuntu:24-v24.04.0
 docker pull snowdreamtech/ubuntu:noble
 
 # Ubuntu 22.04 (Jammy)
 docker pull snowdreamtech/ubuntu:22-latest
-docker pull snowdreamtech/ubuntu:22-v22.04.5
+docker pull snowdreamtech/ubuntu:22-v22.04.0
 docker pull snowdreamtech/ubuntu:jammy
 ```
 
@@ -68,12 +68,12 @@ docker pull ghcr.io/snowdreamtech/ubuntu:latest
 
 # Ubuntu 24.04 (Noble)
 docker pull ghcr.io/snowdreamtech/ubuntu:24-latest
-docker pull ghcr.io/snowdreamtech/ubuntu:24-v24.04.4
+docker pull ghcr.io/snowdreamtech/ubuntu:24-v24.04.0
 docker pull ghcr.io/snowdreamtech/ubuntu:noble
 
 # Ubuntu 22.04 (Jammy)
 docker pull ghcr.io/snowdreamtech/ubuntu:22-latest
-docker pull ghcr.io/snowdreamtech/ubuntu:22-v22.04.5
+docker pull ghcr.io/snowdreamtech/ubuntu:22-v22.04.0
 docker pull ghcr.io/snowdreamtech/ubuntu:jammy
 ```
 
