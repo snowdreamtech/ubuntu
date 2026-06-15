@@ -6,7 +6,7 @@
       "component": "22",
       "include-component-in-tag": true,
       "changelog-path": "CHANGELOG.md",
-      "release-as": "22.04.0",
+      "release-as": "22.04.5",
       "extra-files": [
         {
           "type": "generic",
@@ -20,7 +20,7 @@
       "component": "24",
       "include-component-in-tag": true,
       "changelog-path": "CHANGELOG.md",
-      "release-as": "24.04.0",
+      "release-as": "24.04.4",
       "extra-files": [
         {
           "type": "generic",
