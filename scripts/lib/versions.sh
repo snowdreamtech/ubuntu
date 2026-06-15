@@ -23,9 +23,9 @@ set -eu
 # shellcheck disable=SC2034
 VER_GO="1.26.4"
 VER_NODE="26.3.0"
-VER_PNPM="11.5.2"
+VER_PNPM="11.6.0"
 VER_PNPM_PROVIDER="npm:pnpm"
-VER_PYTHON="3.14.5"
+VER_PYTHON="3.14.6"
 VER_PIPX="1.11.0"
 VER_PIPX_PROVIDER="pip"
 
@@ -33,10 +33,10 @@ VER_PIPX_PROVIDER="pip"
 VER_KOTLIN="2.4.0"
 VER_RUST="1.96.0"
 VER_BUN="1.3.14"
-VER_DENO="2.8.2"
+VER_DENO="2.8.3"
 VER_ZIG="0.16.0"
 VER_JAVA="26.0.1"
-VER_DOTNET="10.0.300"
+VER_DOTNET="10.0.301"
 VER_RUBY="4.0.5"
 VER_YARN="1.22.22"
 
@@ -45,7 +45,7 @@ VER_GRAIN="0.7.2"
 VER_GRAIN_PROVIDER="github:grain-lang/grain"
 VER_GRAIN_REF="grain-v0.7.2"
 
-VER_MOONBIT="0.9.3+b53c2807d"
+VER_MOONBIT="0.10.0+84519ca0a"
 VER_MOONBIT_PROVIDER="github:moonbitlang/moonbit-compiler"
 VER_MOONBIT_REF="v0.7.2+c12686398"
 
@@ -64,7 +64,7 @@ VER_BALLERINA_PROVIDER="github:ballerina-platform/ballerina-distribution"
 VER_STYLUA="2.5.2"
 VER_STYLUA_PROVIDER="github:JohnnyMorganz/StyLua"
 
-VER_JUST="1.51.0"
+VER_JUST="1.52.0"
 VER_JUST_PROVIDER="github:casey/just"
 
 VER_TASK="3.51.1"
@@ -93,7 +93,7 @@ VER_APTOS_PROVIDER="github:aptos-labs/aptos-core"
 # ── 🔐 Tier 1: Security & Engineering (Mirror of .mise.toml) ─────────────────
 VER_GITLEAKS="8.30.1"
 VER_GITLEAKS_PROVIDER="github:gitleaks/gitleaks"
-VER_GH_CLI="2.93.0"
+VER_GH_CLI="2.94.0"
 VER_GH_CLI_PROVIDER="github:cli/cli"
 
 # ── 💎 Tier 1: Core Quality & Commit Tooling (Mirror of .mise.toml) ──────────
@@ -109,13 +109,13 @@ VER_COMMITLINT="21.0.2"
 VER_COMMITLINT_PROVIDER="npm:@commitlint/cli"
 VER_COMMITLINT_CONFIG="21.0.2"
 VER_COMMITLINT_CONFIG_PROVIDER="npm:@commitlint/config-conventional"
-VER_COMMITIZEN="4.3.1"
+VER_COMMITIZEN="4.3.2"
 VER_COMMITIZEN_PROVIDER="npm:commitizen"
 VER_CZ_CONVENTIONAL_CHANGELOG="3.3.0"
 VER_CZ_CONVENTIONAL_CHANGELOG_PROVIDER="npm:cz-conventional-changelog"
 
 # Universal formatting
-VER_PRETTIER="3.8.3"
+VER_PRETTIER="3.8.4"
 VER_PRETTIER_PROVIDER="npm:prettier"
 
 # Shell & scripting
@@ -159,10 +159,10 @@ VER_STYLELINT_PROVIDER="npm:stylelint"
 VER_STYLELINT_CONFIG="40.0.0"
 VER_STYLELINT_CONFIG_PROVIDER="npm:stylelint-config-standard"
 
-VER_ASSEMBLYSCRIPT="0.28.18"
+VER_ASSEMBLYSCRIPT="0.28.19"
 VER_ASSEMBLYSCRIPT_PROVIDER="npm:assemblyscript"
 
-VER_OPA="1.17.0"
+VER_OPA="1.17.1"
 VER_OPA_PROVIDER="github:open-policy-agent/opa"
 
 VER_BUF="1.70.0"
@@ -179,7 +179,7 @@ VER_GOLANGCI_LINT="1.64.5"
 VER_VITEPRESS="1.6.4"
 VER_VITEPRESS_PROVIDER="npm:vitepress"
 
-VER_ESLINT="10.4.1"
+VER_ESLINT="10.5.0"
 VER_ESLINT_PROVIDER="npm:eslint"
 
 VER_MARKDOWNLINT="0.22.1"
@@ -197,7 +197,7 @@ VER_HADOLINT_PROVIDER="github:hadolint/hadolint"
 VER_DOCKERFILE_UTILS="0.16.3"
 VER_DOCKERFILE_UTILS_PROVIDER="npm:dockerfile-utils"
 
-VER_RUFF="0.15.16"
+VER_RUFF="0.15.17"
 VER_RUFF_PROVIDER="github:astral-sh/ruff"
 
 VER_CLANG_FORMAT="22.1.5"
@@ -222,7 +222,7 @@ VER_GOVULNCHECK="1.3.0"
 VER_GOVULNCHECK_PROVIDER="go:golang.org/x/vuln/cmd/govulncheck"
 
 # Updated 2026-04-05: Ensure latest versions are installed
-VER_PIP_AUDIT="2.10.0"
+VER_PIP_AUDIT="2.10.1"
 VER_PIP_AUDIT_PROVIDER="pipx:pip-audit"
 
 VER_CARGO_AUDIT="0.22.2"
@@ -236,9 +236,9 @@ VER_ZIZMOR_PROVIDER="github:zizmorcore/zizmor"
 VER_HELM="3.17.1"
 VER_TERRAFORM="1.11.0"
 VER_TERRAGRUNT="1.0.0-rc3"
-VER_TOFU="1.12.1"
+VER_TOFU="1.12.2"
 VER_TOFU_PROVIDER="github:opentofu/opentofu"
-VER_PULUMI="3.245.0"
+VER_PULUMI="3.246.0"
 VER_PULUMI_PROVIDER="github:pulumi/pulumi"
 VER_KUBE_LINTER="0.8.3"
 VER_KUBE_LINTER_PROVIDER="github:stackrox/kube-linter"
@@ -258,5 +258,5 @@ VER_BATS_PROVIDER="npm:bats"
 
 # ── 🛠️ Mise Internal / Helpers ────────────────────────────────────────────────
 VER_MISE="2026.4.15"
-VER_USAGE="3.4.0"
+VER_USAGE="3.5.0"
 VER_USAGE_PROVIDER="usage"
