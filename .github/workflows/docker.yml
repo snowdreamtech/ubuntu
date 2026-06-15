@@ -167,6 +167,9 @@ jobs:
             docker-images-prod.s3.us-west-2.amazonaws.com:443
             docker-images-prod.s3.us-east-1.amazonaws.com:443
             docker-images-prod.s3.amazonaws.com:443
+            s3.amazonaws.com:443
+            s3.us-west-2.amazonaws.com:443
+            s3.us-east-1.amazonaws.com:443
             osv-vulnerabilities.storage.googleapis.com:443
             api.osv.dev:443
             get.trivy.dev:443
