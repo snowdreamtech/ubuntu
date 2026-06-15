@@ -131,8 +131,6 @@ jobs:
         with:
           egress-policy: block
           allowed-endpoints: >
-            auth.docker.io:443
-            registry-1.docker.io:443
             api.github.com:443
             *.githubusercontent.com:443
             github.com:443
@@ -161,17 +159,20 @@ jobs:
             repo.yarnpkg.com:443
             ghcr.io:443
             pkg-containers.githubusercontent.com:443
-            public.ecr.aws:443
             production.cloudflare.docker.com:443
+            registry-1.docker.io:443
+            auth.docker.io:443
+            docker.io:443
+            quay.io:443
+            cdn.quay.io:443
+            docker-images-prod.s3.us-west-2.amazonaws.com:443
+            docker-images-prod.s3.us-east-1.amazonaws.com:443
+            docker-images-prod.s3.amazonaws.com:443
             osv-vulnerabilities.storage.googleapis.com:443
             api.osv.dev:443
             get.trivy.dev:443
             *.aquasecurity.github.io:443
             *.sigstore.dev:443
-            docker.io:443
-            quay.io:443
-            docker-images-prod.s3.us-west-2.amazonaws.com:443
-            docker-images-prod.s3.us-east-1.amazonaws.com:443
 
       - name: "🧹 Optimize Runner Disk Space"
         if: steps.version-filter.outputs.skip != 'true'
