@@ -1,3 +1,6 @@
+# Copyright (c) 2026 SnowdreamTech. All rights reserved.
+# Licensed under the MIT License. See LICENSE file in the project root for full license information.
+
 ---
 name: "🌙 Nightly Security Audit"
 
@@ -11,16 +14,23 @@ permissions:
   contents: read
   issues: write
 
+env:
+  UNIRTM_LOCKED: 1
+  # Opt into Node.js 24 now ahead of GitHub's June 16, 2026 forced migration.
+  # See: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "1"
+
 jobs:
   audit:
     name: "🔍 Full Security Audit"
     runs-on: ubuntu-latest
     environment: development
-    timeout-minutes: 60
+    timeout-minutes: 120
     steps:
-      - name: "🔒 Harden Runner (Security Egress Audit)"
-        uses: step-security/harden-runner@6c3c2f2c1c457b00c10c4848d6f5491db3b629df # v2.18.0
+      - name: "🔒 Harden Runner"
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
         with:
+          disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
             api.github.com:443
@@ -58,6 +68,7 @@ jobs:
             access.redhat.com:443
             sso.redhat.com:443
             dl-cdn.alpinelinux.org:443
+<<<<<<< HEAD
             registry.npmjs.org:443
             registry.yarnpkg.com:443
             pypi.org:443
@@ -98,23 +109,30 @@ jobs:
             rekor.sigstore.dev:443
             fulcio.sigstore.dev:443
             api.sigstore.dev:443
+=======
+>>>>>>> main
       - name: "📂 Checkout Repository Code"
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
           persist-credentials: false
 
-      - name: "⚡ Setup mise (Tool Manager)"
-        uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
-
+      - name: "⚡ Setup UniRTM"
+        uses: snowdreamtech/setup-unirtm@cacfb4d739ee46d4a4b2528b02b508df2f560706 # v0.4.0
+        with:
+          unirtm-version: "0.24.0"
+          install: true
+          trust: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_SECRET || secrets.GITHUB_TOKEN }}
       - name: "🛡️ Run Security Audit"
         shell: sh
         env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_SECRET || secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          UNIRTM_YES: 1
         run: |
-          # We run make audit which includes gitleaks, osv-scanner, etc.
-          make audit
+          # We run unirtm run audit which includes gitleaks, osv-scanner, etc.
+          unirtm run audit
 
       - name: "🚨 Report Vulnerabilities"
         if: failure()
@@ -127,7 +145,7 @@ jobs:
 
           **Run History:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
-          Please run \`make audit\` locally to investigate and fix these issues."
+          Please run \`unirtm run audit\` locally to investigate and fix these issues."
 
           # Check if an open issue with the same title already exists to avoid duplication
           _EXISTS=$(gh issue list --search "$_TITLE" --state open --json number --jq ".[0].number")

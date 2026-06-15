@@ -1,3 +1,6 @@
+# Copyright (c) 2026 SnowdreamTech. All rights reserved.
+# Licensed under the MIT License. See LICENSE file in the project root for full license information.
+
 ---
 # GitHub Cache Management
 # Purpose: Automatically clears stale GitHub Actions caches to optimize storage and prevents build pollution.
@@ -23,7 +26,7 @@ name: "🧹 Cache Cleanup"
 permissions: {}
 
 env:
-  MISE_LOCKED: 1
+  UNIRTM_LOCKED: 1
 
 jobs:
   cleanup:
@@ -35,11 +38,12 @@ jobs:
     permissions:
       actions: write # Required to delete caches via the GitHub API
       contents: read # Required for repository metadata access
-    timeout-minutes: 20 # 10m is more than enough for cache list/delete operations
+    timeout-minutes: 40 # 10m is more than enough for cache list/delete operations
     steps:
-      - name: "🔒 Harden Runner (Security Egress Audit)"
-        uses: step-security/harden-runner@6c3c2f2c1c457b00c10c4848d6f5491db3b629df # v2.18.0
+      - name: "🔒 Harden Runner"
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
         with:
+          disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
             api.github.com:443
@@ -77,6 +81,7 @@ jobs:
             access.redhat.com:443
             sso.redhat.com:443
             dl-cdn.alpinelinux.org:443
+<<<<<<< HEAD
             registry.npmjs.org:443
             registry.yarnpkg.com:443
             pypi.org:443
@@ -117,6 +122,8 @@ jobs:
             rekor.sigstore.dev:443
             fulcio.sigstore.dev:443
             api.sigstore.dev:443
+=======
+>>>>>>> main
       - name: "🧹 Prune Inactive GitHub Caches"
         shell: sh # POSIX compliant shell for better portability
         run: |

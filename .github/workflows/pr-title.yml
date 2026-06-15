@@ -1,3 +1,6 @@
+# Copyright (c) 2026 SnowdreamTech. All rights reserved.
+# Licensed under the MIT License. See LICENSE file in the project root for full license information.
+
 ---
 # PR Title Check
 # Purpose: Verifies that pull request titles adhere to the Conventional Commits specification.
@@ -8,7 +11,7 @@
 #   - group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }} (Scoped to PR/ref).
 #   - cancel-in-progress: true (Immediate feedback on updated PR titles).
 # Design:
-#   - Uses 'pull_request_target' to allow linting even from fork contributions.
+#   - Uses 'pull_request' to ensure safety by preventing access to repository secrets from forks.
 #   - Near-instant global verification to maintain repository history purity.
 
 name: "✅ PR Title Check"
@@ -23,23 +26,24 @@ name: "✅ PR Title Check"
 permissions: {}
 
 env:
-  MISE_LOCKED: 1
+  UNIRTM_LOCKED: 1
 
 jobs:
   commitlint:
     name: "🔍 Semantic Title Validation"
     runs-on: ubuntu-latest
     concurrency:
-      group: pr-title-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+      group: pr-title-${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
     permissions:
       pull-requests: read # Required to read the pull request metadata via the GitHub API
       statuses: write # Required to post status check results
-    timeout-minutes: 15 # Title linting is near-instant
+    timeout-minutes: 30 # Title linting is near-instant
     steps:
-      - name: "🔒 Harden Runner (Security Egress Audit)"
-        uses: step-security/harden-runner@6c3c2f2c1c457b00c10c4848d6f5491db3b629df # v2.18.0
+      - name: "🔒 Harden Runner"
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
         with:
+          disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
             api.github.com:443
@@ -77,6 +81,7 @@ jobs:
             access.redhat.com:443
             sso.redhat.com:443
             dl-cdn.alpinelinux.org:443
+<<<<<<< HEAD
             registry.npmjs.org:443
             registry.yarnpkg.com:443
             pypi.org:443
@@ -117,10 +122,12 @@ jobs:
             rekor.sigstore.dev:443
             fulcio.sigstore.dev:443
             api.sigstore.dev:443
+=======
+>>>>>>> main
       - name: "🔍 Validate PR Title Integrity"
         uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6.1.1
         env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_SECRET || secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           # Ensures PR titles follow Conventional Commits to maintain repository history purity.
           requireScope: false

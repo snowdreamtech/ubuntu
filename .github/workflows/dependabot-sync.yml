@@ -1,9 +1,12 @@
+# Copyright (c) 2026 SnowdreamTech. All rights reserved.
+# Licensed under the MIT License. See LICENSE file in the project root for full license information.
+
 ---
 # Dependabot Smart Sync
 # Purpose: Automatically regenerates .github/dependabot.yml based on detected ecosystems.
-# Trigger: Push to dev/main (manifest file changes), monthly schedule, or manual dispatch.
+# Trigger: Push to dev (manifest file changes), monthly schedule, or manual dispatch.
 # Design:
-#   - Uses scripts/gen-dependabot.sh to scan for manifest files via git ls-files.
+#   - Uses .unirtm.toml to scan for manifest files via git ls-files.
 #   - Only commits if the generated config differs from the current one.
 #   - Uses native git commands — no third-party commit Actions.
 
@@ -35,9 +38,9 @@ name: "🤖 Dependabot Smart Sync"
       - "**/devcontainer.json"
       - ".pre-commit-config.yaml"
       - "Chart.yaml"
-      - "scripts/gen-dependabot.sh"
-      # Mise toolchain configuration
-      - ".mise.toml"
+      - ".unirtm.toml"
+      # UniRTM toolchain configuration
+      - ".unirtm.toml"
       - ".github/workflows/dependabot-sync.yml"
   schedule:
     # Weekly safety net: every Monday at 06:00 UTC
@@ -46,6 +49,12 @@ name: "🤖 Dependabot Smart Sync"
 
 permissions: {}
 
+env:
+  UNIRTM_LOCKED: 1
+  # Opt into Node.js 24 now ahead of GitHub's June 16, 2026 forced migration.
+  # See: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "1"
+
 jobs:
   sync:
     name: "🔄 Sync Dependabot Config"
@@ -53,11 +62,12 @@ jobs:
     permissions:
       contents: write
     environment: maintenance
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
-      - name: "🔒 Harden Runner (Security Egress Audit)"
-        uses: step-security/harden-runner@6c3c2f2c1c457b00c10c4848d6f5491db3b629df # v2.18.0
+      - name: "🔒 Harden Runner"
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
         with:
+          disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
             api.github.com:443
@@ -95,6 +105,7 @@ jobs:
             access.redhat.com:443
             sso.redhat.com:443
             dl-cdn.alpinelinux.org:443
+<<<<<<< HEAD
             registry.npmjs.org:443
             registry.yarnpkg.com:443
             pypi.org:443
@@ -135,61 +146,38 @@ jobs:
             rekor.sigstore.dev:443
             fulcio.sigstore.dev:443
             api.sigstore.dev:443
+=======
+>>>>>>> main
       - name: "📂 Checkout Repository Code"
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: true
           ref: ${{ github.ref }}
 
-      - name: "⚡ Cache Mise Tools"
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+      - name: "⚡ Setup UniRTM"
+        uses: snowdreamtech/setup-unirtm@cacfb4d739ee46d4a4b2528b02b508df2f560706 # v0.4.0
         with:
-          path: |
-            ~/.local/bin
-            ~/.local/share/mise
-            ~/Library/Application Support/mise
-            ~/AppData/Local/mise
-          key: ${{ runner.os }}-mise-${{ hashFiles('.mise.toml', 'mise.lock', 'scripts/lib/versions.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-mise-
-
-      - name: "🚀 Initialize Development Environment"
-        shell: sh
-        run: |
-          make setup
-          make install
+          unirtm-version: "0.24.0"
+          install: true
+          trust: true
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_SECRET || secrets.GITHUB_TOKEN }}
-
-      - name: "🩺 Verify Environment Health"
-        shell: sh
-        # Run in a separate step so GITHUB_PATH entries written by make setup
-        # (mise shims) are visible in this step's PATH.
-        run: |
-          make check-env
-        env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_SECRET || secrets.GITHUB_TOKEN }}
-
-      - name: "🧪 Run Generator Smoke Test"
-        shell: sh
-        run: |
-          sh tests/smoke-test-gen-dependabot.sh
 
       - name: "🤖 Generate Dependabot Config"
         shell: sh
         run: |
-          make gen-dependabot
+          unirtm generate dependabot --output .github/dependabot.yml
         env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_SECRET || secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          UNIRTM_YES: 1
 
-      - name: "🔧 Update Mise Toolchain & Lockfile"
+      - name: "🔧 Update UniRTM Toolchain & Lockfile"
         shell: sh
         run: |
-          make update-tools
-          make sync-lock
+          unirtm lock --all-platforms
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_SECRET || secrets.GITHUB_TOKEN }}
+          UNIRTM_YES: 1
 
       - name: "📝 Commit Changes (if any)"
         shell: sh
@@ -197,13 +185,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_SECRET || secrets.GITHUB_TOKEN }}
           GITHUB_REF: ${{ github.ref }}
         run: |
-          if git diff --quiet .github/dependabot.yml mise.lock scripts/lib/versions.sh .mise.toml 2>/dev/null; then
-            echo "✅ No changes detected. Dependabot config and Mise toolchain are up-to-date."
+          if git diff --quiet .github/dependabot.yml unirtm.lock .unirtm.toml 2>/dev/null; then
+            echo "✅ No changes detected. Dependabot config and UniRTM toolchain are up-to-date."
           else
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add .github/dependabot.yml mise.lock scripts/lib/versions.sh .mise.toml
-            git commit --signoff -m "chore(deps): sync dependabot config and mise toolchain [skip ci]"
+            git add .github/dependabot.yml unirtm.lock .unirtm.toml
+            git commit --signoff -m "chore(deps): sync dependabot config and unirtm toolchain [skip ci]"
             git push origin HEAD:"$GITHUB_REF"
-            echo "✅ Dependabot config and Mise toolchain updated and pushed."
+            echo "✅ Dependabot config and UniRTM toolchain updated and pushed."
           fi

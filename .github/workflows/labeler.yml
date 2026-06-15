@@ -1,3 +1,6 @@
+# Copyright (c) 2026 SnowdreamTech. All rights reserved.
+# Licensed under the MIT License. See LICENSE file in the project root for full license information.
+
 ---
 # Pull Request Labeler
 # Purpose: Automatically categorizes PRs based on changed file paths to improve backlog visibility.
@@ -21,23 +24,24 @@ name: "🏷️ Pull Request Labeler"
 permissions: {}
 
 env:
-  MISE_LOCKED: 1
+  UNIRTM_LOCKED: 1
 
 jobs:
   label:
     name: "🏷️ Pull Request Categorization"
     runs-on: ubuntu-latest
     concurrency:
-      group: labeler-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+      group: labeler-${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
     permissions:
       pull-requests: write # Required to apply labels to the pull request
       contents: read # Required to analyze changed files via the GitHub API
-    timeout-minutes: 15 # Path-based labeling is extremely fast
+    timeout-minutes: 30 # Path-based labeling is extremely fast
     steps:
-      - name: "🔒 Harden Runner (Security Egress Audit)"
-        uses: step-security/harden-runner@6c3c2f2c1c457b00c10c4848d6f5491db3b629df # v2.18.0
+      - name: "🔒 Harden Runner"
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
         with:
+          disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
             api.github.com:443
@@ -75,6 +79,7 @@ jobs:
             access.redhat.com:443
             sso.redhat.com:443
             dl-cdn.alpinelinux.org:443
+<<<<<<< HEAD
             registry.npmjs.org:443
             registry.yarnpkg.com:443
             pypi.org:443
@@ -115,8 +120,10 @@ jobs:
             rekor.sigstore.dev:443
             fulcio.sigstore.dev:443
             api.sigstore.dev:443
+=======
+>>>>>>> main
       - name: "🔍 Triage Pull Request (Labeler)"
-        uses: actions/labeler@634933edcd8ababfe52f92936142cc22ac488b1b # v6.0.1
+        uses: actions/labeler@f27b608878404679385c85cfa523b85ccb86e213 # v6.1.0
         with:
           # Automatically applies labels based on file path changes to improve maintenance visibility.
           repo-token: ${{ secrets.GITHUB_TOKEN }}

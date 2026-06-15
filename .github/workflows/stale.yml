@@ -1,3 +1,6 @@
+# Copyright (c) 2026 SnowdreamTech. All rights reserved.
+# Licensed under the MIT License. See LICENSE file in the project root for full license information.
+
 ---
 # Mark Stale Issues and PRs
 # Purpose: Maintains repository health by identifying and closing inactive issues and pull requests.
@@ -23,7 +26,7 @@ name: "🕰️ Mark Stale Issues and PRs"
 permissions: {}
 
 env:
-  MISE_LOCKED: 1
+  UNIRTM_LOCKED: 1
 
 jobs:
   stale:
@@ -35,11 +38,12 @@ jobs:
     permissions:
       issues: write # Required to label and close stagnant issues
       pull-requests: write # Required to label and close stagnant PRs
-    timeout-minutes: 20 # Maintenance tasks are usually fast API operations
+    timeout-minutes: 40 # Maintenance tasks are usually fast API operations
     steps:
-      - name: "🔒 Harden Runner (Security Egress Audit)"
-        uses: step-security/harden-runner@6c3c2f2c1c457b00c10c4848d6f5491db3b629df # v2.18.0
+      - name: "🔒 Harden Runner"
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
         with:
+          disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
             api.github.com:443
@@ -77,6 +81,7 @@ jobs:
             access.redhat.com:443
             sso.redhat.com:443
             dl-cdn.alpinelinux.org:443
+<<<<<<< HEAD
             registry.npmjs.org:443
             registry.yarnpkg.com:443
             pypi.org:443
@@ -117,8 +122,10 @@ jobs:
             rekor.sigstore.dev:443
             fulcio.sigstore.dev:443
             api.sigstore.dev:443
+=======
+>>>>>>> main
       - name: "🧹 Mark Inactive Issues & PRs (Stale)"
-        uses: actions/stale@b5d41d4e1d5dceea10e7104786b73624c18a190f # v10.2.0
+        uses: actions/stale@eb5cf3af3ac0a1aa4c9c45633dd1ae542a27a899 # v10.3.0
         with:
           # Automatically identifies and labels stagnant items to maintain repository focus.
           repo-token: ${{ secrets.GITHUB_TOKEN }}

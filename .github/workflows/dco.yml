@@ -1,3 +1,6 @@
+# Copyright (c) 2026 SnowdreamTech. All rights reserved.
+# Licensed under the MIT License. See LICENSE file in the project root for full license information.
+
 ---
 # DCO Check
 # Purpose: Enforces the Developer Certificate of Origin (DCO) by verifying commits include 'Signed-off-by'.
@@ -12,7 +15,7 @@ name: "✍️ DCO"
 permissions: {}
 
 env:
-  MISE_LOCKED: 1
+  UNIRTM_LOCKED: 1
 
 jobs:
   dco:
@@ -28,15 +31,16 @@ jobs:
       github.event.pull_request.user.login != 'release-please[bot]' &&
       github.event.pull_request.user.login != 'snowdream'
     concurrency:
-      group: dco-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+      group: dco-${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
     permissions:
       contents: read
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
-      - name: "🔒 Harden Runner (Security Egress Audit)"
-        uses: step-security/harden-runner@6c3c2f2c1c457b00c10c4848d6f5491db3b629df # v2.18.0
+      - name: "🔒 Harden Runner"
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
         with:
+          disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
             api.github.com:443
@@ -74,6 +78,7 @@ jobs:
             access.redhat.com:443
             sso.redhat.com:443
             dl-cdn.alpinelinux.org:443
+<<<<<<< HEAD
             registry.npmjs.org:443
             registry.yarnpkg.com:443
             pypi.org:443
@@ -114,6 +119,8 @@ jobs:
             rekor.sigstore.dev:443
             fulcio.sigstore.dev:443
             api.sigstore.dev:443
+=======
+>>>>>>> main
       - name: "🛡️ Check DCO Signature"
         uses: tisonkun/actions-dco@f1024cd563550b5632e754df11b7d30b73be54a5 # v1.1
         # This action fails if any commit in the PR lacks a 'Signed-off-by' line.
