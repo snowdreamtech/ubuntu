@@ -5,8 +5,9 @@
       "release-type": "simple",
       "component": "22",
       "include-component-in-tag": true,
-      "changelog-path": "CHANGELOG.md",
       "release-as": "22.04.0",
+      "changelog-path": "CHANGELOG.md",
+      "exclude-paths": ["docker/22/CHANGELOG.md"],
       "extra-files": [
         {
           "type": "generic",
@@ -19,8 +20,9 @@
       "release-type": "simple",
       "component": "24",
       "include-component-in-tag": true,
-      "changelog-path": "CHANGELOG.md",
       "release-as": "24.04.0",
+      "changelog-path": "CHANGELOG.md",
+      "exclude-paths": ["docker/24/CHANGELOG.md"],
       "extra-files": [
         {
           "type": "generic",
@@ -33,8 +35,9 @@
       "release-type": "simple",
       "component": "25",
       "include-component-in-tag": true,
-      "changelog-path": "CHANGELOG.md",
       "release-as": "25.10.0",
+      "changelog-path": "CHANGELOG.md",
+      "exclude-paths": ["docker/25/CHANGELOG.md"],
       "extra-files": [
         {
           "type": "generic",
@@ -47,8 +50,9 @@
       "release-type": "simple",
       "component": "26",
       "include-component-in-tag": true,
-      "changelog-path": "CHANGELOG.md",
       "release-as": "26.04.0",
+      "changelog-path": "CHANGELOG.md",
+      "exclude-paths": ["docker/26/CHANGELOG.md"],
       "extra-files": [
         {
           "type": "generic",
