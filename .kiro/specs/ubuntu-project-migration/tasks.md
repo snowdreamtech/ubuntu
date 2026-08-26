@@ -364,7 +364,6 @@ The implementation is organized into discrete, atomic tasks that can be executed
   - [x] 16.6 Add smoke tests for all registries
     - Add smoke test steps for DockerHub images
     - Add smoke test steps for GHCR images
-    - Add smoke test steps for Quay.io images
     - Test basic functionality (entrypoint, timezone, user context, tools)
     - _Requirements: 3.5_
 
@@ -474,4 +473,4 @@ The implementation is organized into discrete, atomic tasks that can be executed
 - Architecture support varies by Ubuntu version (22.04 has 5 platforms, 24/25/26 have 6 platforms)
 - Version codename tags enable user-friendly image references (jammy, noble, questing, resolute)
 - Security features include vulnerability scanning, SBOM generation, provenance attestation, and image signing
-- Smoke tests validate functionality across all container registries (DockerHub, GHCR, Quay.io)
+- Smoke tests validate functionality across all container registries (DockerHub, GHCR)

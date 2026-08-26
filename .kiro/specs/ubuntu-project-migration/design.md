@@ -251,7 +251,7 @@ matrix:
 
 - Use Docker Buildx for multi-platform builds
 - Implement GitHub Actions cache for build acceleration
-- Support multiple container registries (DockerHub, GHCR, Quay.io)
+- Support multiple container registries (DockerHub, GHCR)
 - Include comprehensive smoke tests for each registry
 - Generate detailed build summaries in GitHub Actions UI
 
@@ -404,7 +404,6 @@ Description:
 
 ### Registry Authentication Failures
 
-**Scenario**: Login to DockerHub, GHCR, or Quay.io fails
 
 **Handling**:
 
@@ -621,9 +620,6 @@ docker pull snowdreamtech/ubuntu:${version}-latest
 
 # Test GHCR
 docker pull ghcr.io/snowdreamtech/ubuntu:${version}-latest
-
-# Test Quay.io
-docker pull quay.io/snowdreamtech/ubuntu:${version}-latest
 ```
 
 **Expected**: Images are pullable from all registries

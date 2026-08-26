@@ -288,7 +288,7 @@ jobs:
 3. **Fail-Safe**: `fail-fast: false` allows other builds to continue
 4. **Security First**: Harden Runner, Trivy scanning, SARIF upload
 5. **Multi-Platform**: QEMU + Buildx for cross-platform builds
-6. **Multi-Registry**: Support for DockerHub, GHCR, Quay.io
+6. **Multi-Registry**: Support for DockerHub, GHCR
 7. **Build Cache**: GitHub Actions cache for faster builds
 8. **Comprehensive Tags**: Version, codename, latest, nightly, date tags
 9. **Smoke Tests**: Verify images in each registry
