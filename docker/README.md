@@ -4,39 +4,31 @@ This directory contains Docker configurations for multiple Ubuntu versions.
 
 ## Supported Versions
 
-| Version | Codename | Base Image   | Tag Format                            |
-| ------- | -------- | ------------ | ------------------------------------- |
-| 22      | Jammy    | ubuntu:22.04 | 22-v22.04.0, 22-latest, jammy         |
-| 24      | Noble    | ubuntu:24.04 | 24-v24.04.0, 24-latest, latest, noble |
-| 25      | Questing | ubuntu:25.10 | 25-v25.10.0, 25-latest, questing      |
-| 26      | Resolute | ubuntu:26.04 | 26-v26.04.0, 26-latest, resolute      |
+| Version | Codename | Base Image   | Tag Format                           |
+| ------- | -------- | ------------ | ------------------------------------ |
+| 22      | Jammy    | ubuntu:22.04 | 22-v22.4.5, 22-latest, jammy         |
+| 24      | Noble    | ubuntu:24.04 | 24-v24.4.5, 24-latest, latest, noble |
+| 26      | Resolute | ubuntu:26.04 | 26-v26.4.1, 26-latest, resolute      |
 
 ## Directory Structure
 
 ```
 docker/
-├── 22/                          # Ubuntu 22.04 (Jammy)
+├── 22/                          # Ubuntu 22.04 LTS (Jammy)
 │   ├── Dockerfile               # Multi-stage Dockerfile
 │   ├── docker-entrypoint.sh     # Container entrypoint script
 │   ├── vimrc.local              # Vim configuration
 │   └── entrypoint.d/            # Entrypoint scripts directory
 │       ├── 00-base-init.sh      # Initialization script
 │       └── 01-base-setup.sh     # Setup script (user, umask)
-├── 24/                          # Ubuntu 24.04 (Noble)
+├── 24/                          # Ubuntu 24.04 LTS (Noble)
 │   ├── Dockerfile               # Multi-stage Dockerfile
 │   ├── docker-entrypoint.sh     # Container entrypoint script
 │   ├── vimrc.local              # Vim configuration
 │   └── entrypoint.d/            # Entrypoint scripts directory
 │       ├── 00-base-init.sh      # Initialization script
 │       └── 01-base-setup.sh     # Setup script (user, umask)
-├── 25/                          # Ubuntu 25.10 (Questing)
-│   ├── Dockerfile               # Multi-stage Dockerfile
-│   ├── docker-entrypoint.sh     # Container entrypoint script
-│   ├── vimrc.local              # Vim configuration
-│   └── entrypoint.d/            # Entrypoint scripts directory
-│       ├── 00-base-init.sh      # Initialization script
-│       └── 01-base-setup.sh     # Setup script (user, umask)
-└── 26/                          # Ubuntu 26.04 (Resolute)
+└── 26/                          # Ubuntu 26.04 LTS (Resolute)
     ├── Dockerfile               # Multi-stage Dockerfile
     ├── docker-entrypoint.sh     # Container entrypoint script
     ├── vimrc.local              # Vim configuration
