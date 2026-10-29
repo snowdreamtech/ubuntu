@@ -1,32 +1,65 @@
 {
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "packages": {
-    "docker/alpine": {
+    "docker/22": {
       "release-type": "simple",
-      "component": "alpine",
+      "component": "22",
       "include-component-in-tag": true,
-      "release-as": "3.24.1",
+      "release-as": "22.04.0",
       "changelog-path": "CHANGELOG.md",
-      "exclude-paths": ["docker/alpine/CHANGELOG.md"],
-      "extra-files": ["docker/alpine/Dockerfile", ".github/workflows/docker.yml"]
+      "exclude-paths": ["docker/22/CHANGELOG.md"],
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "Dockerfile",
+          "glob": false
+        }
+      ]
     },
-    "docker/debian": {
+    "docker/24": {
       "release-type": "simple",
-      "component": "debian",
+      "component": "24",
       "include-component-in-tag": true,
-      "release-as": "13.6.0",
+      "release-as": "24.04.0",
       "changelog-path": "CHANGELOG.md",
-      "exclude-paths": ["docker/debian/CHANGELOG.md"],
-      "extra-files": ["docker/debian/Dockerfile", ".github/workflows/docker.yml"]
+      "exclude-paths": ["docker/24/CHANGELOG.md"],
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "Dockerfile",
+          "glob": false
+        }
+      ]
     },
-    "docker/rocky": {
+    "docker/25": {
       "release-type": "simple",
-      "component": "rocky",
+      "component": "25",
       "include-component-in-tag": true,
-      "release-as": "10.2.0",
+      "release-as": "25.10.0",
       "changelog-path": "CHANGELOG.md",
-      "exclude-paths": ["docker/rocky/CHANGELOG.md"],
-      "extra-files": ["docker/rocky/Dockerfile", ".github/workflows/docker.yml"]
+      "exclude-paths": ["docker/25/CHANGELOG.md"],
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "Dockerfile",
+          "glob": false
+        }
+      ]
+    },
+    "docker/26": {
+      "release-type": "simple",
+      "component": "26",
+      "include-component-in-tag": true,
+      "release-as": "26.04.0",
+      "changelog-path": "CHANGELOG.md",
+      "exclude-paths": ["docker/26/CHANGELOG.md"],
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "Dockerfile",
+          "glob": false
+        }
+      ]
     }
   },
   "include-v-in-tag": true,
