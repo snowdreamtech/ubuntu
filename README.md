@@ -165,7 +165,6 @@ unirtm run fix
 ```bash
 # Build specific Ubuntu variant
 docker build -t ubuntu:26 ./docker/26/
-docker build -t ubuntu:25 ./docker/25/
 docker build -t ubuntu:24 ./docker/24/
 docker build -t ubuntu:22 ./docker/22/
 ```

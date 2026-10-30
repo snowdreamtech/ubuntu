@@ -18,7 +18,6 @@ name: "🐳 Docker Multi-Platform Build"
       # Release-Please generated tags (primary format)
       - "22-v*"
       - "24-v*"
-      - "25-v*"
       - "26-v*"
       # Legacy semantic version tags (backward compatibility)
       - "[0-9]+.[0-9]+.[0-9]+"
@@ -46,7 +45,6 @@ name: "🐳 Docker Multi-Platform Build"
           - "all"
           - "22"
           - "24"
-          - "25"
           - "26"
         default: "all"
       push_images:
@@ -84,11 +82,6 @@ jobs:
           - version: "24"
             codename: "noble"
             is_latest: true
-            platforms: "linux/amd64,linux/arm64,linux/armhf,linux/ppc64le,linux/s390x,linux/riscv64"
-          # Ubuntu 25.10 (Questing) - 6 platforms
-          - version: "25"
-            codename: "questing"
-            is_latest: false
             platforms: "linux/amd64,linux/arm64,linux/armhf,linux/ppc64le,linux/s390x,linux/riscv64"
           # Ubuntu 26.04 (Resolute) - 6 platforms
           - version: "26"
@@ -130,7 +123,7 @@ jobs:
                   ${{ matrix.version }}-*|ubuntu-${{ matrix.version }}*|${{ matrix.version }}*)
                     # Version-specific tag, matches this version
                     ;;
-                  22-*|24-*|25-*|26-*)
+                  22-*|24-*|26-*)
                     # Tag for another specific ubuntu version, skip this version
                     echo "skip=true" >> "$GITHUB_OUTPUT"
                     echo "→ Skipping Ubuntu ${{ matrix.version }} (tag ${tag_name} is for another version)"
@@ -292,9 +285,9 @@ jobs:
             # Legacy format: ubuntu-X
             type=match,enable=${{ startsWith(github.ref, format('refs/tags/ubuntu-{0}', matrix.version)) && !contains(github.ref, format('refs/tags/ubuntu-{0}.', matrix.version)) }},priority=700,prefix=,suffix=,pattern=ubuntu-([0-9]+),group=1
             # Legacy format: standard semver (only for is_latest version)
-            type=semver,enable=${{ matrix.is_latest && !startsWith(github.ref, 'refs/tags/22-') && !startsWith(github.ref, 'refs/tags/24-') && !startsWith(github.ref, 'refs/tags/25-') && !startsWith(github.ref, 'refs/tags/26-') && !startsWith(github.ref, 'refs/tags/ubuntu-') }},priority=750,pattern={{version}}
-            type=semver,enable=${{ matrix.is_latest && !startsWith(github.ref, 'refs/tags/22-') && !startsWith(github.ref, 'refs/tags/24-') && !startsWith(github.ref, 'refs/tags/25-') && !startsWith(github.ref, 'refs/tags/26-') && !startsWith(github.ref, 'refs/tags/ubuntu-') }},priority=750,pattern={{major}}.{{minor}}
-            type=semver,enable=${{ matrix.is_latest && !startsWith(github.ref, 'refs/tags/22-') && !startsWith(github.ref, 'refs/tags/24-') && !startsWith(github.ref, 'refs/tags/25-') && !startsWith(github.ref, 'refs/tags/26-') && !startsWith(github.ref, 'refs/tags/ubuntu-') }},priority=750,pattern={{major}}
+            type=semver,enable=${{ matrix.is_latest && !startsWith(github.ref, 'refs/tags/22-') && !startsWith(github.ref, 'refs/tags/24-') && !startsWith(github.ref, 'refs/tags/26-') && !startsWith(github.ref, 'refs/tags/ubuntu-') }},priority=750,pattern={{version}}
+            type=semver,enable=${{ matrix.is_latest && !startsWith(github.ref, 'refs/tags/22-') && !startsWith(github.ref, 'refs/tags/24-') && !startsWith(github.ref, 'refs/tags/26-') && !startsWith(github.ref, 'refs/tags/ubuntu-') }},priority=750,pattern={{major}}.{{minor}}
+            type=semver,enable=${{ matrix.is_latest && !startsWith(github.ref, 'refs/tags/22-') && !startsWith(github.ref, 'refs/tags/24-') && !startsWith(github.ref, 'refs/tags/26-') && !startsWith(github.ref, 'refs/tags/ubuntu-') }},priority=750,pattern={{major}}
 
       - name: "🚀 Execute Multi-Architecture Docker Build & Delivery"
         if: steps.version-filter.outputs.skip != 'true'

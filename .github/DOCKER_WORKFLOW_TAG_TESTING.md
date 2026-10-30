@@ -14,7 +14,6 @@ The workflow supports Release-Please generated tags:
 tags:
   - "22-v*" # Matches: 22-v22.04.0, etc.
   - "24-v*" # Matches: 24-v24.04.0, etc.
-  - "25-v*" # Matches: 25-v25.10.0, etc.
   - "26-v*" # Matches: 26-v26.04.0, etc.
 ```
 
@@ -32,9 +31,9 @@ tags:
   - "v[0-9]+.[0-9]+" # Matches: v24.04, v22.04
   - "V[0-9]+.[0-9]+" # Matches: V24.04, V22.04
   - "ubuntu-*.*" # Matches: ubuntu-24.04, ubuntu-22.04
-  - "[0-9]+" # Matches: 22, 24, 25, 26
-  - "v[0-9]+" # Matches: v22, v24, v25, v26
-  - "V[0-9]+" # Matches: V22, V24, V25, V26
+  - "[0-9]+" # Matches: 22, 24, 26
+  - "v[0-9]+" # Matches: v22, v24, v26
+  - "V[0-9]+" # Matches: V22, V24, V26
   - "ubuntu-*" # Matches: ubuntu-24, ubuntu-latest
 ```
 
@@ -85,6 +84,6 @@ You can manually trigger builds for specific versions:
 
 1. Go to **Actions** → **🐳 Docker Multi-Platform Build**
 2. Click **Run workflow**
-3. Select Ubuntu version: `22`, `24`, `25`, `26`, or `all`
+3. Select Ubuntu version: `22`, `24`, `26`, or `all`
 4. Choose whether to push images (default: `true`)
 5. Click **Run workflow**

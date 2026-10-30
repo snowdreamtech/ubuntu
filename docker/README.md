@@ -77,11 +77,6 @@ docker pull snowdreamtech/ubuntu:22-latest
 docker pull snowdreamtech/ubuntu:22-v22.04.0
 docker pull snowdreamtech/ubuntu:jammy
 
-# Ubuntu 25
-docker pull snowdreamtech/ubuntu:25-latest
-docker pull snowdreamtech/ubuntu:25-v25.10.0
-docker pull snowdreamtech/ubuntu:questing
-
 # Ubuntu 26
 docker pull snowdreamtech/ubuntu:26-latest
 docker pull snowdreamtech/ubuntu:26-v26.04.0
@@ -125,7 +120,6 @@ docker run -it -e DEBUG=true snowdreamtech/ubuntu:latest
 # Build specific Ubuntu variant
 docker build -t ubuntu:22-local ./docker/22/
 docker build -t ubuntu:24-local ./docker/24/
-docker build -t ubuntu:25-local ./docker/25/
 docker build -t ubuntu:26-local ./docker/26/
 
 # Build multi-architecture image with buildx (Ubuntu 24+)
